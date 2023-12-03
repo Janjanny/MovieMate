@@ -13,6 +13,7 @@ import {
 
 import DateFormat from "../components/DateFormat";
 import Runtime from "../components/Runtime";
+import TrendingMovies from "../components/TrendingMovies";
 
 const Home = () => {
   // const [popularNow, setPopularNow] = useState([]);
@@ -82,141 +83,148 @@ const Home = () => {
     } catch (error) {
       console.log("Error: ", error);
     }
-
-    movieDetails();
   };
 
   // console.log(populars[0]);
   // console.log(movieDetails.id);
 
   return (
-    <Box
-      width={"100%"}
-      height={"fit-content"}
-      position={"relative"}
-      overflow={"hidden"}
-      sx={{
-        backgroundImage: `url('${backdropPath}${movieDetails.backdrop_path}')`,
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        "&::before": afterOverlay,
-      }}
-    >
+    <>
+      {/* hero banner */}
       <Box
-        color={"white"}
         width={"100%"}
-        height={"100%"}
-        p={"2rem 13%"}
-        marginTop={"12rem"}
+        height={"fit-content"}
         position={"relative"}
+        overflow={"hidden"}
+        sx={{
+          backgroundImage: `url('${backdropPath}${movieDetails.backdrop_path}')`,
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          "&::before": afterOverlay,
+          transition: "400ms ease-in",
+        }}
       >
-        <Rating voteAverage={movieDetails.vote_average} />
-
-        <Stack
-          direction={"row"}
-          gap={"20px"}
-          sx={{ position: "relative", zIndex: 5 }}
+        <Box
+          color={"white"}
+          width={"100%"}
+          height={"100%"}
+          p={"2rem 13%"}
+          marginTop={"12rem"}
+          position={"relative"}
         >
-          <Typography>
-            {movieDetails && movieDetails.genres
-              ? movieDetails.genres.map((genre) => genre.name).join(", ")
-              : " "}
-          </Typography>
+          <Rating voteAverage={movieDetails.vote_average} />
 
-          <p>&#x2022;</p>
-
-          <Typography>
-            <DateFormat movieDate={movieDetails.release_date} />
-          </Typography>
-
-          <p>&#x2022;</p>
-
-          <Typography>
-            <Runtime runtime={movieDetails.runtime} />
-          </Typography>
-        </Stack>
-        <Typography
-          variant="h2"
-          fontSize={"3.5rem"}
-          textTransform={"uppercase"}
-          fontWeight={"bold"}
-          margin={".6rem 0"}
-          sx={{ position: "relative", zIndex: 5 }}
-        >
-          {movieDetails.title}
-        </Typography>
-        <Typography width={"45%"} sx={{ position: "relative", zIndex: 5 }}>
-          {movieDetails.overview}
-        </Typography>
-        <Stack direction={"row"} gap={"1.3rem"} mt={"2rem"}>
-          <Button
-            variant="contained"
-            sx={{
-              gap: "8px",
-              borderRadius: "20px",
-              position: "relative",
-              zIndex: 5,
-            }}
-          >
-            <PlayArrowIcon /> Watch Trailer
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#656565",
-              borderRadius: "20px",
-              "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.9)" },
-              position: "relative",
-              zIndex: 5,
-            }}
-          >
-            See Details
-          </Button>
-        </Stack>
-
-        {/* popular movies */}
-        <Box mt={"7rem"}>
-          <Typography
-            mb={"1.5rem"}
-            fontSize={"1rem"}
-            fontWeight={"regular"}
+          <Stack
+            direction={"row"}
+            gap={"20px"}
             sx={{ position: "relative", zIndex: 5 }}
           >
-            Popular Now
-          </Typography>
-          <Stack direction={"row"} justifyContent={"space-between"}>
-            {topFours.map((popular) => (
-              <Box
-                key={popular.id}
-                onClick={() => {
-                  handleBackdropClick(popular.id);
-                }}
-                width={"230px"}
-                height={"120px"}
-                borderRadius={"12px"}
-                overflow={"hidden"}
-                sx={{
-                  position: "relative",
-                  zIndex: 5,
-                  backgroundImage: `url(${backdropPath}${popular.backdrop_path})`,
-                  backgroundPosition: "center center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  cursor: "pointer",
-                  "&::after": popularCardShadow,
-                  "&:hover": {
-                    "&::after": {
-                      opacity: 0, // Set opacity to 0 on hover
-                    },
-                  },
-                }}
-              ></Box>
-            ))}
+            <Typography>
+              {movieDetails && movieDetails.genres
+                ? movieDetails.genres.map((genre) => genre.name).join(", ")
+                : " "}
+            </Typography>
+
+            <p>&#x2022;</p>
+
+            <Typography>
+              <DateFormat movieDate={movieDetails.release_date} />
+            </Typography>
+
+            <p>&#x2022;</p>
+
+            <Typography>
+              <Runtime runtime={movieDetails.runtime} />
+            </Typography>
           </Stack>
+          <Typography
+            variant="h2"
+            fontSize={"3.5rem"}
+            textTransform={"uppercase"}
+            fontWeight={"bold"}
+            margin={".6rem 0"}
+            sx={{ position: "relative", zIndex: 5 }}
+          >
+            {movieDetails.title}
+          </Typography>
+          <Typography width={"45%"} sx={{ position: "relative", zIndex: 5 }}>
+            {movieDetails.overview}
+          </Typography>
+          <Stack direction={"row"} gap={"1.3rem"} mt={"2rem"}>
+            <Button
+              variant="contained"
+              sx={{
+                gap: "8px",
+                borderRadius: "20px",
+                position: "relative",
+                zIndex: 5,
+              }}
+            >
+              <PlayArrowIcon /> Watch Trailer
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#656565",
+                borderRadius: "20px",
+                "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.9)" },
+                position: "relative",
+                zIndex: 5,
+              }}
+            >
+              See Details
+            </Button>
+          </Stack>
+
+          {/* popular movies */}
+          <Box mt={"7rem"}>
+            <Typography
+              mb={"1.5rem"}
+              fontSize={"1rem"}
+              fontWeight={"regular"}
+              sx={{ position: "relative", zIndex: 5 }}
+            >
+              Popular Now
+            </Typography>
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              {topFours.map((popular) => (
+                <Box
+                  key={popular.id}
+                  onClick={() => {
+                    handleBackdropClick(popular.id);
+                  }}
+                  width={"230px"}
+                  height={"120px"}
+                  borderRadius={"12px"}
+                  overflow={"hidden"}
+                  sx={{
+                    position: "relative",
+                    zIndex: 5,
+                    backgroundImage: `url(${backdropPath}${popular.backdrop_path})`,
+                    backgroundPosition: "center center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    cursor: "pointer",
+                    "&::after": popularCardShadow,
+                    "&:hover": {
+                      "&::after": {
+                        opacity: 0, // Set opacity to 0 on hover
+                      },
+                    },
+                  }}
+                ></Box>
+              ))}
+            </Stack>
+          </Box>
         </Box>
       </Box>
-    </Box>
+
+      {/* trending movies */}
+      <Box m={"15rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
+        <TrendingMovies />
+      </Box>
+    </>
   );
 };
 
