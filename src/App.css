@@ -1,0 +1,18 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.rating {
+  background-color: #21c71e;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 18px;
+  margin-bottom: 1rem;
+}
