@@ -70,8 +70,24 @@ const Home = () => {
 
   const topFours = populars.slice(1, 5);
 
+  const handleBackdropClick = async (movieId) => {
+    // fetch the movie using id
+    try {
+      const movieDetails = await fetchMovieDetails(
+        "https://api.themoviedb.org/3/movie",
+        `${movieId}`,
+        movieOptions
+      );
+      setMovieDetails(movieDetails);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+
+    movieDetails();
+  };
+
   // console.log(populars[0]);
-  // console.log(movieDetails.vote_average);
+  // console.log(movieDetails.id);
 
   return (
     <Box
@@ -80,7 +96,7 @@ const Home = () => {
       position={"relative"}
       overflow={"hidden"}
       sx={{
-        backgroundImage: `url('${backdropPath}${activeBackDrop.backdrop_path}')`,
+        backgroundImage: `url('${backdropPath}${movieDetails.backdrop_path}')`,
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -111,7 +127,7 @@ const Home = () => {
           <p>&#x2022;</p>
 
           <Typography>
-            <DateFormat movieDate={activeBackDrop.release_date} />
+            <DateFormat movieDate={movieDetails.release_date} />
           </Typography>
 
           <p>&#x2022;</p>
@@ -128,10 +144,10 @@ const Home = () => {
           margin={".6rem 0"}
           sx={{ position: "relative", zIndex: 5 }}
         >
-          {activeBackDrop.title}
+          {movieDetails.title}
         </Typography>
         <Typography width={"45%"} sx={{ position: "relative", zIndex: 5 }}>
-          {activeBackDrop.overview}
+          {movieDetails.overview}
         </Typography>
         <Stack direction={"row"} gap={"1.3rem"} mt={"2rem"}>
           <Button
@@ -173,6 +189,9 @@ const Home = () => {
             {topFours.map((popular) => (
               <Box
                 key={popular.id}
+                onClick={() => {
+                  handleBackdropClick(popular.id);
+                }}
                 width={"230px"}
                 height={"120px"}
                 borderRadius={"12px"}
