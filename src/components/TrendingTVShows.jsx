@@ -1,20 +1,61 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import Popular1 from "../assets/popular-1.jpg";
 import { useState, useEffect } from "react";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Rating from "./Rating";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import { Link } from "react-router-dom";
 import {
   fetchMovieData,
   movieOptions,
   fetchMovieDetails,
   fetchGenres,
+  showOptions,
 } from "../utils/fetchAPI";
 import Runtime from "./Runtime";
 
-const TrendingMovies = ({ movieDetails }) => {
-  const movieList = movieDetails.slice(5, 8);
+const TrendingTVShows = () => {
+  const [tvShowList, setTvShowList] = useState([]);
+
+  useEffect(() => {
+    try {
+      // fetch trending movies
+      const fetchShowAndDetails = async () => {
+        const tvShow = await fetchMovieData(
+          "https://api.themoviedb.org/3/trending/tv",
+          "day",
+          movieOptions
+        );
+
+        // console.log(tvShow.results[0].id);
+        // fetch details for each shows
+        const fetchDetails = tvShow.results.map(async (show) => {
+          const details = await fetchMovieDetails(
+            "https://api.themoviedb.org/3/tv",
+            `${show.id}?language=en-US`,
+            showOptions
+          );
+
+          return details;
+        });
+
+        // wait for all details fetch to complete
+        const allDetails = await Promise.all(fetchDetails);
+        // console.log(allDetails);
+
+        // combine the movie datas with its details
+        const showsWithDetails = tvShow.results.map((movie, index) => ({
+          ...movie,
+          movieDetails: allDetails[index],
+        }));
+
+        setTvShowList(showsWithDetails.slice(5, 8));
+      };
+
+      fetchShowAndDetails();
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }, []);
+
+  console.log("tvShowList : ", tvShowList);
   return (
     <Box p={"2rem 0"}>
       <hr
@@ -28,7 +69,7 @@ const TrendingMovies = ({ movieDetails }) => {
         alignItems={"center"}
       >
         <Typography variant="h4" fontWeight={"bold"}>
-          Trending Movies
+          Trending TV Shows
         </Typography>
         <Typography
           sx={{
@@ -49,7 +90,7 @@ const TrendingMovies = ({ movieDetails }) => {
       </Stack>
       {/* cards here */}
       <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
-        {movieList.map((movie) => (
+        {tvShowList.map((movie) => (
           <Box
             key={movie.id}
             width={"21rem"}
@@ -86,15 +127,17 @@ const TrendingMovies = ({ movieDetails }) => {
               key={movie.id}
             >
               <Typography variant="h5" fontWeight={"bold"}>
-                {movie.title.length > 19
-                  ? `${movie.title.slice(0, 19)}...`
-                  : movie.title}
+                {movie.name.length > 19
+                  ? `${movie.name.slice(0, 19)}...`
+                  : movie.name}
               </Typography>
               <Typography>
-                <Runtime runtime={movie.movieDetails.runtime} />
+                {movie.movieDetails.number_of_seasons > 1
+                  ? `${movie.movieDetails.number_of_seasons} Seasons`
+                  : `${movie.movieDetails.number_of_seasons} Season`}
               </Typography>
             </Stack>
-            <Stack direction={"row"} gap="12px">
+            <Stack direction={"row"} gap="12px" flexWrap={"wrap"}>
               {movie.movieDetails.genres.map((genre, index) => (
                 <Typography
                   key={index}
@@ -116,4 +159,4 @@ const TrendingMovies = ({ movieDetails }) => {
     </Box>
   );
 };
-export default TrendingMovies;
+export default TrendingTVShows;

@@ -14,62 +14,60 @@ import {
 import DateFormat from "../components/DateFormat";
 import Runtime from "../components/Runtime";
 import TrendingMovies from "../components/TrendingMovies";
+import TrendingTVShows from "../components/TrendingTVShows";
 
 const Home = () => {
   // const [popularNow, setPopularNow] = useState([]);
 
   const backdropPath = "https://www.themoviedb.org/t/p/original";
   const [populars, setPopulars] = useState([]);
-  const [activeBackDrop, setActiveBackDrop] = useState("");
-  const [movieDetails, setMovieDetails] = useState("");
+  const [activeBackDrop, setActiveBackDrop] = useState([]);
+  const [movieDetails, setMovieDetails] = useState([]);
 
   // useEffect for fetching the data
   useEffect(() => {
-    const fetchMovieBanner = async () => {
-      try {
+    try {
+      // fetch movie and details
+      const fetchMovieAndDetails = async () => {
         const movies = await fetchMovieData(
-          "https://api.themoviedb.org/3/movie",
-          "popular",
+          "https://api.themoviedb.org/3/trending/movie",
+          "day",
           movieOptions
         );
-        setPopulars(movies.results);
-        setActiveBackDrop(movies.results[0]);
 
-        // fetch movie detail
-        const movieDetails = await fetchMovieDetails(
-          "https://api.themoviedb.org/3/movie",
-          `${activeBackDrop.id}`,
-          movieOptions
-        );
-        setMovieDetails(movieDetails);
-      } catch (error) {
-        console.log("Error while fetching: ", error);
-      }
-    };
-    fetchMovieBanner();
-  }, []);
-
-  // fetch specific movieDetails
-  useEffect(() => {
-    const fetchMovieDetail = async () => {
-      try {
-        if (activeBackDrop.id) {
-          const movieDetails = await fetchMovieDetails(
+        // fetch details for each movies
+        const fetchDetails = movies.results.map(async (movie) => {
+          const details = await fetchMovieDetails(
             "https://api.themoviedb.org/3/movie",
-            `${activeBackDrop.id}`,
+            `${movie.id}`,
             movieOptions
           );
-          setMovieDetails(movieDetails);
-        }
-      } catch (error) {
-        console.log("Error while fetching: ", error);
-      }
-    };
 
-    fetchMovieDetail();
-  }, [activeBackDrop]);
+          return details;
+        });
 
-  const topFours = populars.slice(1, 5);
+        // wait for all details fetch to complete
+        const allDetails = await Promise.all(fetchDetails);
+
+        // combine the movie datas with its details
+        const moviesWithGenres = movies.results.map((movie, index) => ({
+          ...movie,
+          movieDetails: allDetails[index],
+        }));
+
+        setMovieDetails(moviesWithGenres);
+        setActiveBackDrop(moviesWithGenres[0].movieDetails);
+      };
+      fetchMovieAndDetails();
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }, []);
+
+  console.log("activeBackdrop", activeBackDrop);
+  // console.log("movieDetails: ", movieDetails);
+  const topFours = movieDetails.slice(1, 5);
+  // console.log(topFours);
 
   const handleBackdropClick = async (movieId) => {
     // fetch the movie using id
@@ -79,14 +77,11 @@ const Home = () => {
         `${movieId}`,
         movieOptions
       );
-      setMovieDetails(movieDetails);
+      setActiveBackDrop(movieDetails);
     } catch (error) {
       console.log("Error: ", error);
     }
   };
-
-  // console.log(populars[0]);
-  // console.log(movieDetails.id);
 
   return (
     <>
@@ -97,7 +92,7 @@ const Home = () => {
         position={"relative"}
         overflow={"hidden"}
         sx={{
-          backgroundImage: `url('${backdropPath}${movieDetails.backdrop_path}')`,
+          backgroundImage: `url('${backdropPath}${activeBackDrop.backdrop_path}')`,
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -113,7 +108,7 @@ const Home = () => {
           marginTop={"12rem"}
           position={"relative"}
         >
-          <Rating voteAverage={movieDetails.vote_average} />
+          <Rating voteAverage={activeBackDrop.vote_average} />
 
           <Stack
             direction={"row"}
@@ -121,21 +116,21 @@ const Home = () => {
             sx={{ position: "relative", zIndex: 5 }}
           >
             <Typography>
-              {movieDetails && movieDetails.genres
-                ? movieDetails.genres.map((genre) => genre.name).join(", ")
+              {activeBackDrop.genres
+                ? activeBackDrop.genres.map((genre) => genre.name).join(", ")
                 : " "}
             </Typography>
 
             <p>&#x2022;</p>
 
             <Typography>
-              <DateFormat movieDate={movieDetails.release_date} />
+              <DateFormat movieDate={activeBackDrop.release_date} />
             </Typography>
 
             <p>&#x2022;</p>
 
             <Typography>
-              <Runtime runtime={movieDetails.runtime} />
+              <Runtime runtime={activeBackDrop.runtime} />
             </Typography>
           </Stack>
           <Typography
@@ -146,10 +141,10 @@ const Home = () => {
             margin={".6rem 0"}
             sx={{ position: "relative", zIndex: 5 }}
           >
-            {movieDetails.title}
+            {activeBackDrop.title}
           </Typography>
           <Typography width={"45%"} sx={{ position: "relative", zIndex: 5 }}>
-            {movieDetails.overview}
+            {activeBackDrop.overview}
           </Typography>
           <Stack direction={"row"} gap={"1.3rem"} mt={"2rem"}>
             <Button
@@ -221,8 +216,13 @@ const Home = () => {
       </Box>
 
       {/* trending movies */}
-      <Box m={"15rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
-        <TrendingMovies />
+      <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
+        <TrendingMovies movieDetails={movieDetails} />
+      </Box>
+
+      {/* trending shows */}
+      <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
+        <TrendingTVShows />
       </Box>
     </>
   );
