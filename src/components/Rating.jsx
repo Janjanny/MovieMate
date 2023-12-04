@@ -9,7 +9,8 @@ const Rating = ({ voteAverage }) => {
       className="rating"
       fontSize={"14px"}
     >
-      <StarIcon fontSize="14px" /> {voteAverage ? voteAverage.toFixed(1) : " "}
+      <StarIcon fontSize="14px" />{" "}
+      {voteAverage ? voteAverage.toFixed(1) : " N/A"}
     </Box>
   );
 };

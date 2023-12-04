@@ -9,6 +9,7 @@ import {
   fetchMovieData,
   movieOptions,
   fetchMovieDetails,
+  showOptions,
 } from "../utils/fetchAPI";
 
 import DateFormat from "../components/DateFormat";
@@ -20,11 +21,53 @@ const Home = () => {
   // const [popularNow, setPopularNow] = useState([]);
 
   const backdropPath = "https://www.themoviedb.org/t/p/original";
-  const [populars, setPopulars] = useState([]);
   const [activeBackDrop, setActiveBackDrop] = useState([]);
   const [movieDetails, setMovieDetails] = useState([]);
+  const [tvShowList, setTvShowList] = useState([]);
 
-  // useEffect for fetching the data
+  // use effect for fetching tv shows
+  useEffect(() => {
+    try {
+      // fetch trending movies
+      const fetchShowAndDetails = async () => {
+        const tvShow = await fetchMovieData(
+          "https://api.themoviedb.org/3/trending/tv",
+          "day",
+          movieOptions
+        );
+
+        // console.log(tvShow.results[0].id);
+        // fetch details for each shows
+        const fetchDetails = tvShow.results.map(async (show) => {
+          const details = await fetchMovieDetails(
+            "https://api.themoviedb.org/3/tv",
+            `${show.id}?language=en-US`,
+            showOptions
+          );
+
+          return details;
+        });
+
+        // wait for all details fetch to complete
+        const allDetails = await Promise.all(fetchDetails);
+        // console.log(allDetails);
+
+        // combine the movie datas with its details
+        const showsWithDetails = tvShow.results.map((movie, index) => ({
+          ...movie,
+          movieDetails: allDetails[index],
+        }));
+
+        setTvShowList(showsWithDetails);
+      };
+
+      fetchShowAndDetails();
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }, []);
+  console.log("tvshows: ", tvShowList);
+  // useEffect for fetching the movie data
   useEffect(() => {
     try {
       // fetch movie and details
@@ -222,7 +265,7 @@ const Home = () => {
 
       {/* trending shows */}
       <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
-        <TrendingTVShows />
+        <TrendingTVShows tvShows={tvShowList} />
       </Box>
     </>
   );
