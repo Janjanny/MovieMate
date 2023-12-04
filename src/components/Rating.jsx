@@ -2,7 +2,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Box } from "@mui/material";
 
 const Rating = ({ voteAverage }) => {
-  console.log(voteAverage);
+  // console.log(voteAverage);
   return (
     <Box
       sx={{ position: "relative", zIndex: 5 }}

@@ -17,3 +17,9 @@ export const fetchMovieDetails = async (url, id, options) => {
   const data = await response.json();
   return data;
 };
+
+export const fetchGenres = async (url, api_key) => {
+  const response = await fetch(`${url}?apik_key=${api_key}`);
+  const data = await response.json();
+  return data;
+};
