@@ -1,16 +1,8 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import Popular1 from "../assets/popular-1.jpg";
-import { useState, useEffect } from "react";
+
 import Rating from "./Rating";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import { Link } from "react-router-dom";
-import {
-  fetchMovieData,
-  movieOptions,
-  fetchMovieDetails,
-  fetchGenres,
-} from "../utils/fetchAPI";
+
 import Runtime from "./Runtime";
 
 const TrendingMovies = ({ movieDetails }) => {

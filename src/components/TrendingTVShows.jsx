@@ -1,63 +1,11 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
-import { useState, useEffect } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Rating from "./Rating";
-import {
-  fetchMovieData,
-  movieOptions,
-  fetchMovieDetails,
-  fetchGenres,
-  showOptions,
-} from "../utils/fetchAPI";
-import Runtime from "./Runtime";
 
 const TrendingTVShows = ({ tvShows }) => {
-  // const [tvShowList, setTvShowList] = useState([]);
-
-  // useEffect(() => {
-  //   try {
-  //     // fetch trending movies
-  //     const fetchShowAndDetails = async () => {
-  //       const tvShow = await fetchMovieData(
-  //         "https://api.themoviedb.org/3/trending/tv",
-  //         "day",
-  //         movieOptions
-  //       );
-
-  //       // console.log(tvShow.results[0].id);
-  //       // fetch details for each shows
-  //       const fetchDetails = tvShow.results.map(async (show) => {
-  //         const details = await fetchMovieDetails(
-  //           "https://api.themoviedb.org/3/tv",
-  //           `${show.id}?language=en-US`,
-  //           showOptions
-  //         );
-
-  //         return details;
-  //       });
-
-  //       // wait for all details fetch to complete
-  //       const allDetails = await Promise.all(fetchDetails);
-  //       // console.log(allDetails);
-
-  //       // combine the movie datas with its details
-  //       const showsWithDetails = tvShow.results.map((movie, index) => ({
-  //         ...movie,
-  //         movieDetails: allDetails[index],
-  //       }));
-
-  //       setTvShowList(showsWithDetails.slice(5, 8));
-  //     };
-
-  //     fetchShowAndDetails();
-  //   } catch (error) {
-  //     console.log("Error: ", error);
-  //   }
-  // }, []);
-
   const tvShowList = tvShows.slice(5, 8);
-  console.log("tvshows", tvShows);
-  console.log("tvShowList : ", tvShowList);
+  // console.log("tvshows", tvShows);
+  // console.log("tvShowList : ", tvShowList);
   return (
     <Box p={"2rem 0"}>
       <hr

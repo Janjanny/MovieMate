@@ -16,6 +16,7 @@ import DateFormat from "../components/DateFormat";
 import Runtime from "../components/Runtime";
 import TrendingMovies from "../components/TrendingMovies";
 import TrendingTVShows from "../components/TrendingTVShows";
+import HomeRecommended from "../components/HomeRecommended";
 
 const Home = () => {
   // const [popularNow, setPopularNow] = useState([]);
@@ -266,6 +267,11 @@ const Home = () => {
       {/* trending shows */}
       <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
         <TrendingTVShows tvShows={tvShowList} />
+      </Box>
+
+      {/* Recomended Movies */}
+      <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
+        <HomeRecommended />
       </Box>
     </>
   );
