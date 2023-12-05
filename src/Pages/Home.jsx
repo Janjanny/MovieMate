@@ -67,7 +67,7 @@ const Home = () => {
       console.log("Error: ", error);
     }
   }, []);
-  console.log("tvshows: ", tvShowList);
+  // console.log("tvshows: ", tvShowList);
   // useEffect for fetching the movie data
   useEffect(() => {
     try {
@@ -260,18 +260,30 @@ const Home = () => {
       </Box>
 
       {/* trending movies */}
-      <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
+      <Box
+        m={"12rem auto 5rem auto"}
+        width={"80%"}
+        sx={{ backgroundColor: "none" }}
+      >
         <TrendingMovies movieDetails={movieDetails} />
       </Box>
 
       {/* trending shows */}
-      <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
+      <Box
+        m={"5rem auto 5rem auto"}
+        width={"80%"}
+        sx={{ backgroundColor: "none" }}
+      >
         <TrendingTVShows tvShows={tvShowList} />
       </Box>
 
       {/* Recomended Movies */}
-      <Box m={"12rem auto"} width={"80%"} sx={{ backgroundColor: "none" }}>
-        <HomeRecommended />
+      <Box
+        m={"5rem auto 12rem auto"}
+        width={"80%"}
+        sx={{ backgroundColor: "none" }}
+      >
+        <HomeRecommended movieList={movieDetails} tvShowList={tvShowList} />
       </Box>
     </>
   );

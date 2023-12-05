@@ -2,8 +2,18 @@ import { Box, Typography, Stack, Button } from "@mui/material";
 import Rating from "./Rating";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MovieCard from "./MovieCard";
+import { useState } from "react";
+import { Category } from "@mui/icons-material";
 
-const HomeRecommended = () => {
+const HomeRecommended = ({ movieList, tvShowList }) => {
+  const [currentList, setCurrentList] = useState("Movies");
+  console.log(currentList);
+
+  const handleClick = (category) => {
+    setCurrentList(category);
+  };
+
+  console.log("movieDetails: ", movieList);
   return (
     <Box p={"2rem 0"}>
       <hr
@@ -22,7 +32,10 @@ const HomeRecommended = () => {
           </Typography>
           <Stack direction={"row"} gap={"1rem"}>
             <Button
-              variant="outlined"
+              onClick={() => {
+                handleClick("Movies");
+              }}
+              variant={currentList == "Movies" ? "contained" : "outlined"}
               sx={{
                 padding: "1px 12px",
                 fontSize: "1rem",
@@ -32,7 +45,10 @@ const HomeRecommended = () => {
               Movies
             </Button>
             <Button
-              variant="outlined"
+              onClick={() => {
+                handleClick("TV Shows");
+              }}
+              variant={currentList == "TV Shows" ? "contained" : "outlined"}
               sx={{
                 padding: "1px 12px",
                 fontSize: "1rem",
@@ -62,8 +78,16 @@ const HomeRecommended = () => {
       </Stack>
 
       {/* movie cards */}
-      <Stack direction={"row"} gap={"10px"}>
-        <MovieCard />
+      <Stack direction={"row"} justifyContent={"space-between"}>
+        {movieList.slice(0, 4).map((movie) => (
+          <MovieCard
+            title={movie.title}
+            genres={movie.movieDetails.genres}
+            release_date={movie.release_date}
+            runtime={movie.movieDetails.runtime}
+            backdrop={movie.poster_path}
+          />
+        ))}
       </Stack>
     </Box>
   );
