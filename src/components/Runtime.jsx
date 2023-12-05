@@ -4,7 +4,9 @@ const Runtime = ({ runtime }) => {
 
   return (
     <>
-      {Math.floor(hours)}h {minutes}m{" "}
+      {runtime > 15
+        ? `${Math.floor(hours)}h ${minutes}m${" "}`
+        : `${runtime} Season`}
     </>
   );
 };

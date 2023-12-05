@@ -13,7 +13,8 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
     setCurrentList(category);
   };
 
-  console.log("movieDetails: ", movieList);
+  // console.log("movieDetails: ", movieList);
+  console.log("tvShowList: ", tvShowList[0]);
   return (
     <Box p={"2rem 0"}>
       <hr
@@ -79,15 +80,29 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
 
       {/* movie cards */}
       <Stack direction={"row"} justifyContent={"space-between"}>
-        {movieList.slice(0, 4).map((movie) => (
-          <MovieCard
-            title={movie.title}
-            genres={movie.movieDetails.genres}
-            release_date={movie.release_date}
-            runtime={movie.movieDetails.runtime}
-            backdrop={movie.poster_path}
-          />
-        ))}
+        {currentList == "Movies"
+          ? movieList
+              .slice(0, 4)
+              .map((movie) => (
+                <MovieCard
+                  title={movie.title}
+                  genres={movie.movieDetails.genres}
+                  release_date={movie.release_date}
+                  runtime={movie.movieDetails.runtime}
+                  backdrop={movie.poster_path}
+                />
+              ))
+          : tvShowList
+              .slice(0, 4)
+              .map((show) => (
+                <MovieCard
+                  title={show.name}
+                  genres={show.movieDetails.genres}
+                  release_date={show.first_air_date}
+                  backdrop={show.poster_path}
+                  runtime={show.movieDetails.number_of_seasons}
+                />
+              ))}
       </Stack>
     </Box>
   );

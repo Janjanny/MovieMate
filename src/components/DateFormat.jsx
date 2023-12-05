@@ -6,6 +6,6 @@ const DateFormat = ({ movieDate }) => {
   const day = parts[2];
   const dateFormat = `${year}/${month}/${day}`;
 
-  return <>{dateFormat} (PH)</>;
+  return <>{movieDate ? `${dateFormat}(PH)` : "Unreleased"}</>;
 };
 export default DateFormat;

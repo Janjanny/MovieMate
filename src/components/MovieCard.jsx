@@ -9,7 +9,7 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
   //   { id: 123, name: "History" },
   // ];
   return (
-    <Box width={"14rem"} height={"25rem"}>
+    <Box width={"15.5rem"} height={"25rem"}>
       <Box
         width={"100%"}
         height={"20rem"}
@@ -34,7 +34,7 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
       <Typography variant="h5" fontWeight={"bold"}>
         {title.length > 15 ? `${title.slice(0, 15)}...` : title}
       </Typography>
-      <Stack direction={"row"} mt={".8rem"} gap={"12px"}>
+      <Stack direction={"row"} mt={".8rem"} gap={"12px"} flexWrap={"wrap"}>
         {genres.map((genre, index) => (
           <Typography
             key={index}
@@ -50,7 +50,7 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
           </Typography>
         ))}
       </Stack>
-      <Stack direction={"row"} mt={".8rem"} gap={"24px"}>
+      <Stack direction={"row"} mt={".8rem"} gap={"12px"}>
         <Typography>
           <DateFormat movieDate={release_date} />
         </Typography>
