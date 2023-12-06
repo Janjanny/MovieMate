@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Stack, Button, Grid } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Rating from "./Rating";
 
@@ -39,73 +39,80 @@ const TrendingTVShows = ({ tvShows }) => {
         </Typography>
       </Stack>
       {/* cards here */}
-      <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
+      <Grid
+        container
+        width={"100%"}
+        rowSpacing={4}
+        columnSpacing={{ xs: 4, lg: 2 }}
+        justifyContent={"center"}
+      >
         {tvShowList.map((movie) => (
-          <Box
-            key={movie.id}
-            width={"21rem"}
-            height={"fit-content"}
-            sx={{ borderRadius: "12px" }}
-          >
+          <Grid item md={12} lg={4} width={"100%"}>
             <Box
-              width={"100%"}
-              height={"12rem"}
-              sx={{
-                backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
-                backgroundPosition: "center center",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                borderRadius: "12px",
-                marginBottom: "12px",
-              }}
+              key={movie.id}
+              height={"fit-content"}
+              sx={{ borderRadius: "12px" }}
             >
               <Box
-                justifyContent={"flex-end"}
                 width={"100%"}
-                display={"flex"}
-                paddingTop={"8px"}
-                paddingRight={"12px"}
+                height={"12rem"}
+                sx={{
+                  backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
+                  backgroundPosition: "center center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  borderRadius: "12px",
+                  marginBottom: "12px",
+                }}
               >
-                <Rating voteAverage={movie.vote_average} />
-              </Box>
-            </Box>
-            <Stack
-              direction={"row"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              marginBottom={"12px"}
-              key={movie.id}
-            >
-              <Typography variant="h5" fontWeight={"bold"}>
-                {movie.name.length > 19
-                  ? `${movie.name.slice(0, 19)}...`
-                  : movie.name}
-              </Typography>
-              <Typography>
-                {movie.movieDetails.number_of_seasons > 1
-                  ? `${movie.movieDetails.number_of_seasons} Seasons`
-                  : `${movie.movieDetails.number_of_seasons} Season`}
-              </Typography>
-            </Stack>
-            <Stack direction={"row"} gap="12px" flexWrap={"wrap"}>
-              {movie.movieDetails.genres.map((genre, index) => (
-                <Typography
-                  key={index}
-                  sx={{
-                    color: "#E50914",
-                    border: "1px solid #E50914",
-                    padding: "2px 12px",
-                    borderRadius: "5px",
-                    cursor: "default",
-                  }}
+                <Box
+                  justifyContent={"flex-end"}
+                  width={"100%"}
+                  display={"flex"}
+                  paddingTop={"8px"}
+                  paddingRight={"12px"}
                 >
-                  {genre.name}
+                  <Rating voteAverage={movie.vote_average} />
+                </Box>
+              </Box>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                marginBottom={"12px"}
+                key={movie.id}
+              >
+                <Typography variant="h5" fontWeight={"bold"}>
+                  {movie.name.length > 19
+                    ? `${movie.name.slice(0, 19)}...`
+                    : movie.name}
                 </Typography>
-              ))}
-            </Stack>
-          </Box>
+                <Typography>
+                  {movie.movieDetails.number_of_seasons > 1
+                    ? `${movie.movieDetails.number_of_seasons} Seasons`
+                    : `${movie.movieDetails.number_of_seasons} Season`}
+                </Typography>
+              </Stack>
+              <Stack direction={"row"} gap="12px" flexWrap={"wrap"}>
+                {movie.movieDetails.genres.slice(0, 2).map((genre, index) => (
+                  <Typography
+                    key={index}
+                    sx={{
+                      color: "#E50914",
+                      border: "1px solid #E50914",
+                      padding: "2px 12px",
+                      borderRadius: "5px",
+                      cursor: "default",
+                    }}
+                  >
+                    {genre.name}
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
+          </Grid>
         ))}
-      </Stack>
+      </Grid>
     </Box>
   );
 };

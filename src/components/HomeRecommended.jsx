@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Stack, Button, Grid } from "@mui/material";
 import Rating from "./Rating";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MovieCard from "./MovieCard";
@@ -7,14 +7,14 @@ import { Category } from "@mui/icons-material";
 
 const HomeRecommended = ({ movieList, tvShowList }) => {
   const [currentList, setCurrentList] = useState("Movies");
-  console.log(currentList);
+  // console.log(currentList);
 
   const handleClick = (category) => {
     setCurrentList(category);
   };
 
   // console.log("movieDetails: ", movieList);
-  console.log("tvShowList: ", tvShowList[0]);
+  // console.log("tvShowList: ", tvShowList[0]);
   return (
     <Box p={"2rem 0"}>
       <hr
@@ -25,9 +25,9 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
         justifyContent={"space-between"}
         mt={"1.5rem"}
         mb={"2rem"}
-        alignItems={"center"}
+        alignItems={"flex-start"}
       >
-        <Stack direction={"row"} gap={"2rem"}>
+        <Stack direction={{ xs: "column", lg: "row" }} gap={"2rem"}>
           <Typography variant="h4" fontWeight={"bold"}>
             Recommended
           </Typography>
@@ -79,11 +79,17 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
       </Stack>
 
       {/* movie cards */}
-      <Stack direction={"row"} justifyContent={"space-between"}>
+      <Grid
+        container
+        direction={"row"}
+        columnSpacing={2}
+        rowSpacing={{ xs: 15, sm: 8 }}
+        justifyContent={"center"}
+        width={"100%"}
+      >
         {currentList == "Movies"
-          ? movieList
-              .slice(0, 4)
-              .map((movie) => (
+          ? movieList.slice(0, 4).map((movie) => (
+              <Grid item xs={6} sm={6} md={4} lg={3}>
                 <MovieCard
                   title={movie.title}
                   genres={movie.movieDetails.genres}
@@ -91,7 +97,8 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
                   runtime={movie.movieDetails.runtime}
                   backdrop={movie.poster_path}
                 />
-              ))
+              </Grid>
+            ))
           : tvShowList
               .slice(0, 4)
               .map((show) => (
@@ -103,7 +110,7 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
                   runtime={show.movieDetails.number_of_seasons}
                 />
               ))}
-      </Stack>
+      </Grid>
     </Box>
   );
 };

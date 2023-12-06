@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Stack, Button, Grid } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { afterOverlay } from "../utils/customStyles";
 import Rating from "../components/Rating";
@@ -148,18 +148,33 @@ const Home = () => {
           color={"white"}
           width={"100%"}
           height={"100%"}
-          p={"2rem 13%"}
+          p={{ xs: "2rem 5%", lg: "2rem 13%" }}
           marginTop={"12rem"}
           position={"relative"}
+          sx={{
+            textAlign: { xs: "center", md: "left" },
+          }}
         >
-          <Rating voteAverage={activeBackDrop.vote_average} />
+          <Box
+            display={"flex"}
+            width={"100%"}
+            justifyContent={{ xs: "center", md: "flex-start" }}
+          >
+            {" "}
+            <Rating voteAverage={activeBackDrop.vote_average} />
+          </Box>
 
           <Stack
             direction={"row"}
-            gap={"20px"}
-            sx={{ position: "relative", zIndex: 5 }}
+            gap={{ xs: "8px", lg: "15px" }}
+            width={"100%"}
+            justifyContent={{ xs: "center", md: "flex-start" }}
+            sx={{
+              position: "relative",
+              zIndex: 5,
+            }}
           >
-            <Typography>
+            <Typography sx={{ fontSize: { xs: "12px", md: "14.5px" } }}>
               {activeBackDrop.genres
                 ? activeBackDrop.genres.map((genre) => genre.name).join(", ")
                 : " "}
@@ -167,19 +182,20 @@ const Home = () => {
 
             <p>&#x2022;</p>
 
-            <Typography>
+            <Typography sx={{ fontSize: { xs: "12px", md: "14.5px" } }}>
               <DateFormat movieDate={activeBackDrop.release_date} />
             </Typography>
 
             <p>&#x2022;</p>
 
-            <Typography>
+            <Typography sx={{ fontSize: { xs: "12px", md: "14.5px" } }}>
               <Runtime runtime={activeBackDrop.runtime} />
             </Typography>
           </Stack>
           <Typography
             variant="h2"
-            fontSize={"3.5rem"}
+            fontSize={{ xs: "3rem", lg: "3.5rem" }}
+            lineHeight={"3rem"}
             textTransform={"uppercase"}
             fontWeight={"bold"}
             margin={".6rem 0"}
@@ -187,10 +203,23 @@ const Home = () => {
           >
             {activeBackDrop.title}
           </Typography>
-          <Typography width={"45%"} sx={{ position: "relative", zIndex: 5 }}>
+          <Typography
+            width={{ sm: "100%", md: "65%", lg: "45%" }}
+            sx={{
+              position: "relative",
+              zIndex: 5,
+              fontSize: { xs: "12px", md: "14.5px" },
+            }}
+          >
             {activeBackDrop.overview}
           </Typography>
-          <Stack direction={"row"} gap={"1.3rem"} mt={"2rem"}>
+          <Stack
+            direction={"row"}
+            gap={"1.3rem"}
+            mt={"2rem"}
+            mb={{ xs: "8rem", sm: "0" }}
+            justifyContent={{ xs: "center", md: "flex-start" }}
+          >
             <Button
               variant="contained"
               sx={{
@@ -217,7 +246,7 @@ const Home = () => {
           </Stack>
 
           {/* popular movies */}
-          <Box mt={"7rem"}>
+          <Box mt={"7rem"} display={{ xs: "none", sm: "block" }}>
             <Typography
               mb={"1.5rem"}
               fontSize={"1rem"}
@@ -226,35 +255,40 @@ const Home = () => {
             >
               Popular Now
             </Typography>
-            <Stack direction={"row"} justifyContent={"space-between"}>
+            <Grid container spacing={3} justifyContent={"space-between"}>
               {topFours.map((popular) => (
-                <Box
-                  key={popular.id}
-                  onClick={() => {
-                    handleBackdropClick(popular.id);
-                  }}
-                  width={"230px"}
-                  height={"120px"}
-                  borderRadius={"12px"}
-                  overflow={"hidden"}
-                  sx={{
-                    position: "relative",
-                    zIndex: 5,
-                    backgroundImage: `url(${backdropPath}${popular.backdrop_path})`,
-                    backgroundPosition: "center center",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    cursor: "pointer",
-                    "&::after": popularCardShadow,
-                    "&:hover": {
-                      "&::after": {
-                        opacity: 0, // Set opacity to 0 on hover
+                <Grid item xs={12} sm={6} md={6} lg={3}>
+                  <Box
+                    key={popular.id}
+                    onClick={() => {
+                      handleBackdropClick(popular.id);
+                    }}
+                    width={"100%"}
+                    height={"140px"}
+                    borderRadius={"12px"}
+                    overflow={"hidden"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    sx={{
+                      position: "relative",
+                      zIndex: 5,
+                      backgroundImage: `url(${backdropPath}${popular.backdrop_path})`,
+                      backgroundPosition: "center center",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      cursor: "pointer",
+                      "&::after": popularCardShadow,
+                      "&:hover": {
+                        "&::after": {
+                          opacity: 0, // Set opacity to 0 on hover
+                        },
                       },
-                    },
-                  }}
-                ></Box>
+                    }}
+                  ></Box>
+                </Grid>
               ))}
-            </Stack>
+            </Grid>
           </Box>
         </Box>
       </Box>
@@ -262,8 +296,9 @@ const Home = () => {
       {/* trending movies */}
       <Box
         m={"12rem auto 5rem auto"}
-        width={"80%"}
+        width={{ xs: "90%", lg: "80%" }}
         sx={{ backgroundColor: "none" }}
+        overflow={"hidden"}
       >
         <TrendingMovies movieDetails={movieDetails} />
       </Box>
@@ -271,8 +306,9 @@ const Home = () => {
       {/* trending shows */}
       <Box
         m={"5rem auto 5rem auto"}
-        width={"80%"}
+        width={{ xs: "90%", lg: "80%" }}
         sx={{ backgroundColor: "none" }}
+        overflow={"hidden"}
       >
         <TrendingTVShows tvShows={tvShowList} />
       </Box>
@@ -280,8 +316,9 @@ const Home = () => {
       {/* Recomended Movies */}
       <Box
         m={"5rem auto 12rem auto"}
-        width={"80%"}
+        width={{ xs: "90%", lg: "80%" }}
         sx={{ backgroundColor: "none" }}
+        overflow={"hidden"}
       >
         <HomeRecommended movieList={movieDetails} tvShowList={tvShowList} />
       </Box>

@@ -1,18 +1,16 @@
 import { Box, Typography, Stack } from "@mui/material";
-import cover from "../assets/cover.jpg";
 import Rating from "./Rating";
 import Runtime from "./Runtime";
 import DateFormat from "./DateFormat";
 const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
-  // const genres = [
-  //   { id: 11231, name: "Drama" },
-  //   { id: 123, name: "History" },
-  // ];
   return (
-    <Box width={"15.5rem"} height={"25rem"}>
+    <Box
+      width={{ xs: "9rem", sm: "15.5rem" }}
+      height={{ xs: "14rem", sm: "25rem" }}
+    >
       <Box
         width={"100%"}
-        height={"20rem"}
+        height={{ xs: "15rem", sm: "20rem" }}
         mb={"1rem"}
         sx={{
           backgroundImage: `url(https://www.themoviedb.org/t/p/original${backdrop})`,
@@ -35,7 +33,7 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
         {title.length > 15 ? `${title.slice(0, 15)}...` : title}
       </Typography>
       <Stack direction={"row"} mt={".8rem"} gap={"12px"} flexWrap={"wrap"}>
-        {genres.map((genre, index) => (
+        {genres.slice(0, 2).map((genre, index) => (
           <Typography
             key={index}
             sx={{

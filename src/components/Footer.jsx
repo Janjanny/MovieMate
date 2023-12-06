@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <Box p={"5rem 0"} sx={{ backgroundColor: "black" }}>
+    <Box p={"5rem 0"} sx={{ backgroundColor: "black" }} overflow={"hidden"}>
       <Box width={"80%"} m={"0 auto"}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Box>
