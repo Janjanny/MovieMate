@@ -19,12 +19,16 @@ const TrendingMovies = ({ movieDetails }) => {
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Typography variant="h4" fontWeight={"bold"}>
+        <Typography
+          variant="h4"
+          fontSize={{ xs: "1.5rem", md: "2rem" }}
+          fontWeight={"bold"}
+        >
           Trending Movies
         </Typography>
         <Typography
           sx={{
-            fontSize: "1.2rem",
+            fontSize: { xs: "1rem", md: '"1.2rem"' },
             color: "gray",
             backgroundColor: "none",
             "&:hover": { fontWeight: "bold" },
@@ -82,12 +86,16 @@ const TrendingMovies = ({ movieDetails }) => {
                 marginBottom={"12px"}
                 key={movie.id}
               >
-                <Typography variant="h5" fontWeight={"bold"}>
+                <Typography
+                  variant="h5"
+                  fontWeight={"bold"}
+                  fontSize={{ xs: "18px", sm: "21px" }}
+                >
                   {movie.title.length > 19
                     ? `${movie.title.slice(0, 19)}...`
                     : movie.title}
                 </Typography>
-                <Typography>
+                <Typography fontSize={{ xs: "12px", sm: "15px" }}>
                   <Runtime runtime={movie.movieDetails.runtime} />
                 </Typography>
               </Stack>
@@ -96,6 +104,7 @@ const TrendingMovies = ({ movieDetails }) => {
                   <Typography
                     key={index}
                     sx={{
+                      fontSize: { xs: "11px", sm: "16px" },
                       color: "#E50914",
                       border: "1px solid #E50914",
                       padding: "2px 12px",

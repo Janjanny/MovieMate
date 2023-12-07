@@ -307,6 +307,7 @@ const Home = () => {
       <Box
         m={"5rem auto 5rem auto"}
         width={{ xs: "90%", lg: "80%" }}
+        height={"fit-content"}
         sx={{ backgroundColor: "none" }}
         overflow={"hidden"}
       >

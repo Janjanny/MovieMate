@@ -28,7 +28,11 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
         alignItems={"flex-start"}
       >
         <Stack direction={{ xs: "column", lg: "row" }} gap={"2rem"}>
-          <Typography variant="h4" fontWeight={"bold"}>
+          <Typography
+            variant="h4"
+            fontWeight={"bold"}
+            fontSize={{ xs: "1.5rem", md: "2rem" }}
+          >
             Recommended
           </Typography>
           <Stack direction={"row"} gap={"1rem"}>
@@ -62,7 +66,7 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
         </Stack>
         <Typography
           sx={{
-            fontSize: "1.2rem",
+            fontSize: { xs: "1rem", md: '"1.2rem"' },
             color: "gray",
             backgroundColor: "none",
             "&:hover": { fontWeight: "bold" },
@@ -82,8 +86,8 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
       <Grid
         container
         direction={"row"}
-        columnSpacing={2}
-        rowSpacing={{ xs: 15, sm: 8 }}
+        columnSpacing={1}
+        rowSpacing={{ xs: 4, sm: 8 }}
         justifyContent={"center"}
         width={"100%"}
       >
@@ -96,6 +100,7 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
                   release_date={movie.release_date}
                   runtime={movie.movieDetails.runtime}
                   backdrop={movie.poster_path}
+                  rating={movie.movieDetails.vote_average}
                 />
               </Grid>
             ))

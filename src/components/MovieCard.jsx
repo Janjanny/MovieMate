@@ -2,11 +2,18 @@ import { Box, Typography, Stack } from "@mui/material";
 import Rating from "./Rating";
 import Runtime from "./Runtime";
 import DateFormat from "./DateFormat";
-const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
+const MovieCard = ({
+  title,
+  genres,
+  release_date,
+  runtime,
+  backdrop,
+  rating,
+}) => {
   return (
     <Box
       width={{ xs: "9rem", sm: "15.5rem" }}
-      height={{ xs: "14rem", sm: "25rem" }}
+      // height={{ xs: "14rem", sm: "25rem" }}
     >
       <Box
         width={"100%"}
@@ -26,10 +33,14 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
           paddingTop={"8px"}
           paddingRight={"12px"}
         >
-          <Rating voteAverage={9.8} />
+          <Rating voteAverage={rating} />
         </Box>
       </Box>
-      <Typography variant="h5" fontWeight={"bold"}>
+      <Typography
+        variant="h5"
+        fontWeight={"bold"}
+        fontSize={{ xs: "15px", sm: "21px" }}
+      >
         {title.length > 15 ? `${title.slice(0, 15)}...` : title}
       </Typography>
       <Stack direction={"row"} mt={".8rem"} gap={"12px"} flexWrap={"wrap"}>
@@ -37,6 +48,7 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
           <Typography
             key={index}
             sx={{
+              fontSize: { xs: "11px", sm: "16px" },
               color: "#E50914",
               border: "1px solid #E50914",
               padding: "2px 12px",
@@ -48,12 +60,17 @@ const MovieCard = ({ title, genres, release_date, runtime, backdrop }) => {
           </Typography>
         ))}
       </Stack>
-      <Stack direction={"row"} mt={".8rem"} gap={"12px"}>
-        <Typography>
+      <Stack
+        direction={"row"}
+        mt={".8rem"}
+        gap={{ xs: "8px", sm: "12px" }}
+        fontSize={{ xs: "11px", sm: "15px" }}
+      >
+        <Typography fontSize={{ xs: "11px", sm: "15px" }}>
           <DateFormat movieDate={release_date} />
         </Typography>
         <p>&#x2022;</p>
-        <Typography>
+        <Typography fontSize={{ xs: "11px", sm: "15px" }}>
           <Runtime runtime={runtime} />
         </Typography>
       </Stack>
