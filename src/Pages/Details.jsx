@@ -33,7 +33,13 @@ const Details = () => {
             transition: "400ms ease-in",
           }}
         ></Box>
-        <Box pt={"20rem"} width={"80%"} m={"0 auto"}>
+        <Box
+          pt={"20rem"}
+          width={{ xs: "95%", md: "90%", lg: "80%" }}
+          m={"0 auto"}
+          display={"flex"}
+          justifyContent={"center"}
+        >
           <Grid
             container
             width={"100%"}
@@ -42,12 +48,12 @@ const Details = () => {
             rowSpacing={3}
           >
             {/* poster grid */}
-            <Grid item lg={3} zIndex={5}>
+            <Grid item xs={12} md={12} lg={3} zIndex={5}>
               <Box
                 className="poster"
                 width={"100%"}
                 height={"100%"}
-                overflow={"hidden"}
+                display={{ xs: "none", lg: "block" }}
                 sx={{
                   backgroundImage: `url('${Poster}')`,
                   backgroundPosition: "center center",
@@ -57,30 +63,36 @@ const Details = () => {
               ></Box>
             </Grid>
             {/* title and overview grid */}
-            <Grid item lg={9} zIndex={5}>
+            <Grid item md={12} lg={9} zIndex={5} overflow={"hidden"}>
               <Stack direction={"column"} gap={"10px"} height={"100%"}>
                 <Box width={"100%"}>
                   {" "}
-                  <Stack direction={"row"}>
-                    <Box width={"80%"}>
+                  <Stack
+                    direction={{ xs: "column-reverse", sm: "row" }}
+                    justifyContent={"space-between"}
+                  >
+                    <Box width={{ lg: "80%" }}>
                       <Typography
                         sx={{
                           textTransform: "uppercase",
                           fontSize: "2.5rem",
                           fontWeight: "bold",
+                          lineHeight: "3rem",
+                          marginTop: { xs: "1rem", sm: "0" },
                         }}
                       >
-                        oppenheimer
+                        Oppenheimer
                       </Typography>
                       <Stack
                         direction={"row"}
                         gap={{ xs: "8px", lg: "12px" }}
                         width={"100%"}
-                        justifyContent={{ xs: "center", md: "flex-start" }}
+                        justifyContent={{ xs: "flex-start", md: "flex-start" }}
                         sx={{
                           position: "relative",
                           zIndex: 5,
                         }}
+                        textAlign={"left"}
                       >
                         <Typography
                           sx={{ fontSize: { xs: "12px", md: "14.5px" } }}
@@ -117,10 +129,16 @@ const Details = () => {
                         score
                       </Typography>
                     </Box>
-                    <Box width={"20%"} sx={{ paddingTop: "1rem" }}>
+                    <Box
+                      width={{ xs: "100%", sm: "30%" }}
+                      sx={{ paddingTop: "1rem" }}
+                      display={"flex"}
+                      justifyContent={{ xs: "flex-start", md: "flex-end" }}
+                    >
                       <Button
                         className="watch-trailer-btn"
                         sx={{
+                          alignSelf: "flex-start",
                           color: "white",
                           border: "1px solid white",
                           gap: "10px",
@@ -166,7 +184,7 @@ const Details = () => {
               </Stack>
             </Grid>
             {/* movie status grid */}
-            <Grid item lg={3} zIndex={5}>
+            <Grid item md={12} lg={3} zIndex={5}>
               <Box
                 height={"100%"}
                 display={"flex"}
@@ -181,20 +199,46 @@ const Details = () => {
                     border: "1px solid #909090",
                     borderRadius: "10px",
                     backgroundColor: "#0E0E0E",
-                    padding: "1.7rem 1.7rem 5rem 1.7rem",
+                    padding: {
+                      xs: "1.7rem 1.7rem 5rem 1.7rem",
+                      md: "1.5rem",
+                      lg: "1.7rem 1.7rem 5rem 1.7rem",
+                    },
                   }}
                 >
-                  <Stack direction={"column"} gap={"24px"}>
-                    <Typography fontSize={".9rem"}>
+                  <Stack
+                    direction={{ xs: "column", md: "row", lg: "column" }}
+                    gap={"24px"}
+                    sx={{
+                      justifyContent: {
+                        xs: "flex-start",
+                        md: "space-between",
+                        lg: "flex-start",
+                      },
+                    }}
+                  >
+                    <Typography
+                      fontSize={".9rem"}
+                      textAlign={{ xs: "left", md: "center", lg: "left" }}
+                    >
                       <strong>Status</strong> <br /> Released
                     </Typography>
-                    <Typography fontSize={".9rem"}>
+                    <Typography
+                      fontSize={".9rem"}
+                      textAlign={{ xs: "left", md: "center", lg: "left" }}
+                    >
                       <strong>Original Language</strong> <br /> English
                     </Typography>
-                    <Typography fontSize={".9rem"}>
+                    <Typography
+                      fontSize={".9rem"}
+                      textAlign={{ xs: "left", md: "center", lg: "left" }}
+                    >
                       <strong>Budget</strong> <br /> $100,000,000
                     </Typography>
-                    <Typography fontSize={".9rem"}>
+                    <Typography
+                      fontSize={".9rem"}
+                      textAlign={{ xs: "left", md: "center", lg: "left" }}
+                    >
                       <strong>Revenue</strong> <br /> $900,000,000
                     </Typography>
                   </Stack>
