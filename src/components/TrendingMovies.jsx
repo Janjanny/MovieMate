@@ -1,5 +1,6 @@
 import { Box, Typography, Stack, Button, Grid } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Link } from "react-router-dom";
 
 import Rating from "./Rating";
 
@@ -59,26 +60,31 @@ const TrendingMovies = ({ movieDetails }) => {
               height={"fit-content"}
               sx={{ borderRadius: "12px" }}
             >
-              <Box
-                height={"12rem"}
-                sx={{
-                  backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
-                  backgroundPosition: "center center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  borderRadius: "12px",
-                  marginBottom: "12px",
-                }}
+              <Link
+                to={`/details/${movie.id}`}
+                style={{ textDecoration: "none", color: "white" }}
               >
                 <Box
-                  justifyContent={"flex-end"}
-                  display={"flex"}
-                  paddingTop={"8px"}
-                  paddingRight={"12px"}
+                  height={"12rem"}
+                  sx={{
+                    backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
+                    backgroundPosition: "center center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "12px",
+                    marginBottom: "12px",
+                  }}
                 >
-                  <Rating voteAverage={movie.vote_average} />
+                  <Box
+                    justifyContent={"flex-end"}
+                    display={"flex"}
+                    paddingTop={"8px"}
+                    paddingRight={"12px"}
+                  >
+                    <Rating voteAverage={movie.vote_average} />
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
               <Stack
                 direction={"row"}
                 justifyContent={"space-between"}
@@ -86,15 +92,26 @@ const TrendingMovies = ({ movieDetails }) => {
                 marginBottom={"12px"}
                 key={movie.id}
               >
-                <Typography
-                  variant="h5"
-                  fontWeight={"bold"}
-                  fontSize={{ xs: "18px", sm: "21px" }}
+                <Link
+                  to={`/details/${movie.id}`}
+                  style={{ textDecoration: "none", color: "white" }}
                 >
-                  {movie.title.length > 19
-                    ? `${movie.title.slice(0, 19)}...`
-                    : movie.title}
-                </Typography>
+                  <Typography
+                    variant="h5"
+                    fontWeight={"bold"}
+                    fontSize={{ xs: "18px", sm: "21px" }}
+                    sx={{
+                      transition: "all 500ms ease",
+                      "&:hover": {
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
+                    {movie.title.length > 19
+                      ? `${movie.title.slice(0, 19)}...`
+                      : movie.title}
+                  </Typography>
+                </Link>
                 <Typography fontSize={{ xs: "12px", sm: "15px" }}>
                   <Runtime runtime={movie.movieDetails.runtime} />
                 </Typography>

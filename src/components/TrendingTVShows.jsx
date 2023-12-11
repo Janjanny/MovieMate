@@ -1,6 +1,7 @@
 import { Box, Typography, Stack, Button, Grid } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Rating from "./Rating";
+import { Link } from "react-router-dom";
 
 const TrendingTVShows = ({ tvShows }) => {
   const tvShowList = tvShows.slice(5, 8);
@@ -57,28 +58,33 @@ const TrendingTVShows = ({ tvShows }) => {
               height={"fit-content"}
               sx={{ borderRadius: "12px" }}
             >
-              <Box
-                width={"100%"}
-                height={"12rem"}
-                sx={{
-                  backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
-                  backgroundPosition: "center center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  borderRadius: "12px",
-                  marginBottom: "12px",
-                }}
+              <Link
+                to={`/details/${movie.id}`}
+                style={{ textDecoration: "none", color: "white" }}
               >
                 <Box
-                  justifyContent={"flex-end"}
                   width={"100%"}
-                  display={"flex"}
-                  paddingTop={"8px"}
-                  paddingRight={"12px"}
+                  height={"12rem"}
+                  sx={{
+                    backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
+                    backgroundPosition: "center center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "12px",
+                    marginBottom: "12px",
+                  }}
                 >
-                  <Rating voteAverage={movie.vote_average} />
+                  <Box
+                    justifyContent={"flex-end"}
+                    width={"100%"}
+                    display={"flex"}
+                    paddingTop={"8px"}
+                    paddingRight={"12px"}
+                  >
+                    <Rating voteAverage={movie.vote_average} />
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
               <Stack
                 direction={"row"}
                 justifyContent={"space-between"}
@@ -86,15 +92,26 @@ const TrendingTVShows = ({ tvShows }) => {
                 marginBottom={"12px"}
                 key={movie.id}
               >
-                <Typography
-                  variant="h5"
-                  fontWeight={"bold"}
-                  fontSize={{ xs: "18px", sm: "21px" }}
+                <Link
+                  to={`/details/${movie.id}`}
+                  style={{ textDecoration: "none", color: "white" }}
                 >
-                  {movie.name.length > 19
-                    ? `${movie.name.slice(0, 19)}...`
-                    : movie.name}
-                </Typography>
+                  <Typography
+                    variant="h5"
+                    fontWeight={"bold"}
+                    fontSize={{ xs: "18px", sm: "21px" }}
+                    sx={{
+                      transition: "all 500ms ease",
+                      "&:hover": {
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
+                    {movie.name.length > 19
+                      ? `${movie.name.slice(0, 19)}...`
+                      : movie.name}
+                  </Typography>
+                </Link>
                 <Typography fontSize={{ xs: "12px", sm: "15px" }}>
                   {movie.movieDetails.number_of_seasons > 1
                     ? `${movie.movieDetails.number_of_seasons} Seasons`

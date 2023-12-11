@@ -11,14 +11,13 @@ import Popular from "../assets/popular-3.jpg";
 import { afterOverlay } from "../utils/customStyles";
 import { fetchMovieData, movieOptions, showOptions } from "../utils/fetchAPI";
 import MovieCard from "../components/MovieCard";
-import { Link } from "react-router-dom";
 
-const Movies = () => {
+const TvShows = () => {
   const backdropPath = "https://www.themoviedb.org/t/p/original";
-  const categories = ["popular", "now_playing", "top_rated", "upcoming"];
+  const categories = ["popular", "top_rated", "airing_today", "on_the_air"];
   const [featured, setFeatured] = useState();
   const [category, setCategory] = useState("popular");
-  const [movieList, setMovieList] = useState();
+  const [tvShowsList, setTvShowsList] = useState();
 
   // category handle click
   const handleClick = (category) => {
@@ -28,13 +27,13 @@ const Movies = () => {
   // fetch featured
   useEffect(() => {}, []);
 
-  // fetch movie
+  // fetch fetch tv shows
   useEffect(() => {
     //
     try {
       const fetchMovies = async () => {
         const movieDataList = await fetchMovieData(
-          "https://api.themoviedb.org/3/movie",
+          "https://api.themoviedb.org/3/tv",
           category,
           movieOptions
         );
@@ -42,7 +41,7 @@ const Movies = () => {
         // fetch each details for each shows
         const fetchMoviesDetails = movieDataList.results.map(async (movie) => {
           const details = await fetchMovieData(
-            `https://api.themoviedb.org/3/movie`,
+            `https://api.themoviedb.org/3/tv`,
             `${movie.id}?language=en-US`,
             showOptions
           );
@@ -62,7 +61,7 @@ const Movies = () => {
           })
         );
 
-        setMovieList(movieCompleteDetails);
+        setTvShowsList(movieCompleteDetails);
       };
 
       fetchMovies();
@@ -70,7 +69,7 @@ const Movies = () => {
       console.log("Fetch error: ", error);
     }
   }, [category]);
-  console.log("Movies movie list: ", movieList);
+  console.log("TvSHowList list: ", tvShowsList);
   return (
     <Box height={"fit-content"} pb={"5rem"}>
       <Box
@@ -140,8 +139,9 @@ const Movies = () => {
           fontSize={{ xs: "2.5rem", lg: "3rem" }}
           fontWeight={"900"}
           mb={"1rem"}
+          textTransform={"uppercase"}
         >
-          MOVIES
+          tv shows
         </Typography>
         <hr
           style={{ backgroundColor: "#E50914", height: "1px", border: "none" }}
@@ -167,12 +167,12 @@ const Movies = () => {
             >
               {categoryName == "popular"
                 ? "Popular"
-                : categoryName == "now_playing"
-                ? "Now Playing"
+                : categoryName == "on_the_air"
+                ? "On The Air"
                 : categoryName == "top_rated"
                 ? "Top Rated"
-                : categoryName == "upcoming"
-                ? "Upcoming"
+                : categoryName == "airing_today"
+                ? "Airing Today"
                 : " "}
             </Typography>
           ))}
@@ -188,13 +188,13 @@ const Movies = () => {
             justifyContent={"center"}
             width={"100%"}
           >
-            {movieList?.map((movie, index) => (
-              <Grid item xs={6} sm={6} md={4} lg={3} key={index}>
+            {tvShowsList?.map((movie) => (
+              <Grid item xs={6} sm={6} md={4} lg={3}>
                 <MovieCard
-                  title={movie.title}
+                  title={movie.name}
                   genres={movie.movieDetails.genres}
-                  release_date={movie.release_date}
-                  runtime={movie.movieDetails.runtime}
+                  release_date={movie.first_air_date}
+                  runtime={movie.movieDetails.episode_run_time}
                   backdrop={movie.poster_path}
                   rating={movie.movieDetails.vote_average}
                   id={movie.id}
@@ -207,4 +207,4 @@ const Movies = () => {
     </Box>
   );
 };
-export default Movies;
+export default TvShows;

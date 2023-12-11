@@ -12,6 +12,13 @@ export const afterOverlay = {
     "linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.00) 50.56%, rgba(0, 0, 0, 0.53) 100%), linear-gradient(90deg, #030303 0%, rgba(0, 0, 0, 0.00) 60.64%, rgba(0, 0, 0, 0.00) 100%) ",
 };
 
+export const detailsOverlay = {
+  ...backgroundOverlay,
+  zIndex: 2,
+  background:
+    "linear-gradient(180deg, #0A0A0A 0%, rgba(0, 0, 0, 0.30) 53.45%, #0A0A0A 100%)",
+};
+
 export const popularCardShadow = {
   content: "''",
   width: "100%",

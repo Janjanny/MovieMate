@@ -5,7 +5,7 @@ const Rating = ({ voteAverage }) => {
   // console.log(voteAverage);
   return (
     <Box
-      sx={{ position: "relative", zIndex: 5 }}
+      sx={{ position: "relative", zIndex: 5, textDecoration: "none" }}
       className="rating"
       fontSize={"14px"}
     >

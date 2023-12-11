@@ -81,9 +81,6 @@ const Footer = () => {
                 <Link to="/" style={{ color: "white", textDecoration: "none" }}>
                   TV Shows
                 </Link>
-                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                  People
-                </Link>
               </Stack>
             </Box>
           </Grid>

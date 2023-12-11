@@ -2,6 +2,7 @@ import { Box, Typography, Stack } from "@mui/material";
 import Rating from "./Rating";
 import Runtime from "./Runtime";
 import DateFormat from "./DateFormat";
+import { Link } from "react-router-dom";
 const MovieCard = ({
   title,
   genres,
@@ -9,46 +10,66 @@ const MovieCard = ({
   runtime,
   backdrop,
   rating,
+  id,
 }) => {
   return (
     <Box
-      width={{ xs: "9rem", sm: "15.5rem" }}
+      width={{ xs: "100%", md: "15.5rem" }}
       // height={{ xs: "14rem", sm: "25rem" }}
     >
-      <Box
-        width={"100%"}
-        height={{ xs: "15rem", sm: "20rem" }}
-        mb={"1rem"}
-        sx={{
-          backgroundImage: `url(https://www.themoviedb.org/t/p/original${backdrop})`,
-          backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      >
+      <Link to={`/details/${id}`} style={{ textDecoration: "none" }}>
         <Box
-          justifyContent={"flex-end"}
           width={"100%"}
-          display={"flex"}
-          paddingTop={"8px"}
-          paddingRight={"12px"}
+          height={{ xs: "15rem", sm: "20rem" }}
+          mb={"1rem"}
+          sx={{
+            backgroundImage: `url(https://www.themoviedb.org/t/p/original${backdrop})`,
+            backgroundPosition: "center center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
         >
-          <Rating voteAverage={rating} />
+          <Box
+            justifyContent={"flex-end"}
+            width={"100%"}
+            display={"flex"}
+            paddingTop={"8px"}
+            paddingRight={"12px"}
+            sx={{ color: "white" }}
+          >
+            <Rating voteAverage={rating} />
+          </Box>
         </Box>
-      </Box>
-      <Typography
-        variant="h5"
-        fontWeight={"bold"}
-        fontSize={{ xs: "15px", sm: "21px" }}
+      </Link>
+      <Link
+        to={`/details/${id}`}
+        style={{ textDecoration: "none", color: "white" }}
       >
-        {title.length > 15 ? `${title.slice(0, 15)}...` : title}
-      </Typography>
-      <Stack direction={"row"} mt={".8rem"} gap={"12px"} flexWrap={"wrap"}>
+        <Typography
+          variant="h5"
+          fontWeight={"bold"}
+          fontSize={{ xs: "15px", sm: "21px" }}
+          sx={{
+            transition: "all 500ms ease",
+            "&:hover": {
+              textDecoration: "underline",
+            },
+          }}
+        >
+          {title.length > 15 ? `${title.slice(0, 15)}...` : title}
+        </Typography>
+      </Link>
+      <Stack
+        direction={"row"}
+        mt={".8rem"}
+        gap={{ xs: "5px", lg: "12px" }}
+        flexWrap={"wrap"}
+      >
         {genres.slice(0, 2).map((genre, index) => (
           <Typography
             key={index}
             sx={{
-              fontSize: { xs: "11px", sm: "16px" },
+              fontSize: { xs: "10px", sm: "16px" },
               color: "#E50914",
               border: "1px solid #E50914",
               padding: "2px 12px",

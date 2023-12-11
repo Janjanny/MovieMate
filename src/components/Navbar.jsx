@@ -84,13 +84,28 @@ const Navbar = () => {
             color: "white",
             textDecoration: "none",
           }}
+          onClick={() => {
+            setIsShown(false);
+          }}
         >
           Home
         </Link>
-        <Link to="/movies" style={{ color: "white", textDecoration: "none" }}>
+        <Link
+          to="/movies"
+          style={{ color: "white", textDecoration: "none" }}
+          onClick={() => {
+            setIsShown(false);
+          }}
+        >
           Movies
         </Link>
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+        <Link
+          to="/tv-shows"
+          style={{ color: "white", textDecoration: "none" }}
+          onClick={() => {
+            setIsShown(false);
+          }}
+        >
           TV Shows
         </Link>
       </Stack>

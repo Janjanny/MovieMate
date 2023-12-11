@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
 import Footer from "./components/Footer";
 import Movies from "./Pages/Movies";
+import TvShows from "./Pages/TvShows";
+import Details from "./Pages/Details";
 
 const App = () => {
   const theme = createTheme({
@@ -30,6 +32,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<Movies />}></Route>
+            <Route path="/tv-shows" element={<TvShows />}></Route>
+            <Route path="/details/" element={<Details />}></Route>
           </Routes>
           <Footer />
         </Box>
