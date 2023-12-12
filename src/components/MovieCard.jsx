@@ -17,7 +17,7 @@ const MovieCard = ({
       width={{ xs: "100%", md: "15.5rem" }}
       // height={{ xs: "14rem", sm: "25rem" }}
     >
-      <Link to={`/details/${id}`} style={{ textDecoration: "none" }}>
+      <Link to={`/movie-details/${id}`} style={{ textDecoration: "none" }}>
         <Box
           width={"100%"}
           height={{ xs: "15rem", sm: "20rem" }}

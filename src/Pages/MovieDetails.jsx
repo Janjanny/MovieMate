@@ -18,22 +18,15 @@ import Runtime from "../components/Runtime";
 import Loader from "../components/Loader";
 
 const MovieDetails = () => {
-  // const { id } = useParams();
-  const id = 787699;
+  const { id } = useParams();
   const backdropPath = "https://www.themoviedb.org/t/p/original";
   const [movieDetails, setMovieDetails] = useState([]);
 
-  // function for ratings
-  const ratingPercent = (rating) => {
-    return Math.trunc(rating * 10);
+  // function for finding the director
+  const findDirector = (data) => {
+    const directorData = data.find((entry) => entry.job === "Director");
+    return directorData.name;
   };
-
-  // function for trailer
-  const trailerVideo = (data) => {
-    const trailer = data.find((entry) => entry.type === "Trailer");
-    return `https://www.youtube.com/watch?v=${trailer.key}`;
-  };
-
   // render the movie using its id
   useEffect(() => {
     try {
@@ -55,11 +48,17 @@ const MovieDetails = () => {
           `${id}/videos`,
           movieOptions
         );
+        const moviesSocialsData = await fetchMovieDetails(
+          "https://api.themoviedb.org/3/movie/",
+          `${id}/external_ids`,
+          movieOptions
+        );
 
         const combineData = {
           details: movieDetailsData,
           credits: movieCreditsData,
           videos: movieVideosData,
+          socials: moviesSocialsData,
         };
 
         // set the combineData into movieDetails state
@@ -70,7 +69,18 @@ const MovieDetails = () => {
     } catch (error) {
       console.log("Error while fetching data: ", error);
     }
-  }, []);
+  }, [id]);
+
+  // function for ratings
+  const ratingPercent = (rating) => {
+    return Math.trunc(rating * 10);
+  };
+
+  // function for trailer
+  const trailerVideo = (data) => {
+    const trailer = data.find((entry) => entry.type === "Trailer");
+    return `https://www.youtube.com/watch?v=${trailer.key}`;
+  };
 
   console.log(movieDetails);
 
@@ -249,11 +259,11 @@ const MovieDetails = () => {
                       Overview
                     </Typography>
                     <Typography fontSize={"14px"}>
-                      The story of J. Robert Oppenheimer's role in the
-                      development of the atomic bomb during World War II.
+                      {movieDetails.details.overview}
                     </Typography>
                     <Typography mt={"3rem"} fontSize={"14px"}>
-                      <strong>Christopher Nolan</strong> <br /> Director, Writer
+                      <strong>{findDirector(movieDetails.credits.crew)}</strong>
+                      <br /> Director
                     </Typography>
                   </Box>
                 </Stack>
@@ -298,25 +308,39 @@ const MovieDetails = () => {
                         fontSize={".9rem"}
                         textAlign={{ xs: "left", sm: "center", lg: "left" }}
                       >
-                        <strong>Status</strong> <br /> Released
+                        <strong>Status</strong> <br />{" "}
+                        {movieDetails.details.status}
                       </Typography>
                       <Typography
                         fontSize={".9rem"}
                         textAlign={{ xs: "left", sm: "center", lg: "left" }}
                       >
-                        <strong>Original Language</strong> <br /> English
+                        <strong>Original Language</strong> <br />{" "}
+                        {movieDetails.details.spoken_languages.map(
+                          (language) => (
+                            <p>{language.name}</p>
+                          )
+                        )}
                       </Typography>
                       <Typography
                         fontSize={".9rem"}
                         textAlign={{ xs: "left", sm: "center", lg: "left" }}
                       >
-                        <strong>Budget</strong> <br /> $100,000,000
+                        <strong>Budget</strong> <br />{" "}
+                        {movieDetails.details.budget.toLocaleString("en-us", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
                       </Typography>
                       <Typography
                         fontSize={".9rem"}
                         textAlign={{ xs: "left", sm: "center", lg: "left" }}
                       >
-                        <strong>Revenue</strong> <br /> $900,000,000
+                        <strong>Revenue</strong> <br />{" "}
+                        {movieDetails.details.revenue.toLocaleString("en-us", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
                       </Typography>
                     </Stack>
                   </Box>
@@ -343,16 +367,32 @@ const MovieDetails = () => {
                       justifyContent={"space-around"}
                       alignItems={"center"}
                     >
-                      <Link className="social-link">
+                      <Link
+                        className="social-link"
+                        to={`https://www.facebook.com/${movieDetails.socials.facebook_id}`}
+                        target="_blank"
+                      >
                         <FacebookRoundedIcon fontSize={"large"} />
                       </Link>
-                      <Link className="social-link">
+                      <Link
+                        className="social-link"
+                        to={`https://www.twitter.com/${movieDetails.socials.twitter_id}`}
+                        target="_blank"
+                      >
                         <TwitterIcon fontSize={"large"} />
                       </Link>
-                      <Link className="social-link">
+                      <Link
+                        className="social-link"
+                        to={`https://www.instagram.com/${movieDetails.socials.instagram_id}`}
+                        target="_blank"
+                      >
                         <InstagramIcon fontSize={"large"} />
                       </Link>
-                      <Link className="social-link">
+                      <Link
+                        className="social-link"
+                        to={`https://www.imdb.com/title/${movieDetails.socials.imdb_id}`}
+                        target="_blank"
+                      >
                         <LaunchOutlinedIcon fontSize={"large"} />
                       </Link>
                     </Stack>
@@ -384,12 +424,18 @@ const MovieDetails = () => {
                     justifyContent={"center"}
                     gap={1}
                   >
-                    {[...Array(10)].map((_, i) => (
-                      <Grid item key={i} lg={2}>
-                        {" "}
-                        <CastCard />
-                      </Grid>
-                    ))}
+                    {movieDetails.credits.cast
+                      .map((cast, i) => (
+                        <Grid item key={i} xs={4} sm={3} md={2} lg={2}>
+                          {" "}
+                          <CastCard
+                            movieName={cast.character}
+                            actualName={cast.name}
+                            photoPath={cast.profile_path}
+                          />
+                        </Grid>
+                      ))
+                      .slice(0, 10)}
                   </Grid>
                 </Box>
               </Grid>

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Placeholder from "../assets/placeholder.jpg";
 
-const CastCard = () => {
+const CastCard = ({ movieName, actualName, photoPath }) => {
   return (
     <Box
       height={"100%"}
@@ -15,7 +15,7 @@ const CastCard = () => {
       <Box
         sx={{
           height: "6.5rem",
-          backgroundImage: `url(${Placeholder})`,
+          backgroundImage: `url(https://www.themoviedb.org/t/p/w138_and_h175_face${photoPath})`,
           backgroundPosition: "center center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -23,7 +23,7 @@ const CastCard = () => {
       ></Box>
       <Box p={"10px"} display={"flex"}>
         <Typography fontSize={"10px"} mt={"12px"}>
-          <strong>Cillian Murphy</strong> <br /> J. Robert Oppenheimer
+          <strong>{actualName}</strong> <br /> {movieName}
         </Typography>
       </Box>
     </Box>
