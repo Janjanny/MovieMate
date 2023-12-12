@@ -42,7 +42,7 @@ const MovieCard = ({
         </Box>
       </Link>
       <Link
-        to={`/details/${id}`}
+        to={`/movie-details/${id}`}
         style={{ textDecoration: "none", color: "white" }}
       >
         <Typography

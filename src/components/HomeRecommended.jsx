@@ -101,20 +101,22 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
                   runtime={movie.movieDetails.runtime}
                   backdrop={movie.poster_path}
                   rating={movie.movieDetails.vote_average}
+                  id={movie.id}
                 />
               </Grid>
             ))
-          : tvShowList
-              .slice(0, 4)
-              .map((show) => (
+          : tvShowList.slice(0, 4).map((show) => (
+              <Grid item xs={6} sm={6} md={4} lg={3}>
                 <MovieCard
                   title={show.name}
                   genres={show.movieDetails.genres}
                   release_date={show.first_air_date}
                   backdrop={show.poster_path}
                   runtime={show.movieDetails.number_of_seasons}
+                  id={show.id}
                 />
-              ))}
+              </Grid>
+            ))}
       </Grid>
     </Box>
   );

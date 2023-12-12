@@ -22,7 +22,7 @@ const TrendingTVShows = ({ tvShows }) => {
         <Typography
           variant="h4"
           fontWeight={"bold"}
-          fontSize={{ xs: "1.3rem", md: "2rem" }}
+          fontSize={{ xs: "1.5rem", md: "2rem" }}
         >
           Trending TV Shows
         </Typography>
@@ -63,7 +63,6 @@ const TrendingTVShows = ({ tvShows }) => {
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Box
-                  width={"100%"}
                   height={"12rem"}
                   sx={{
                     backgroundImage: `url(https://www.themoviedb.org/t/p/original${movie.backdrop_path})`,
@@ -76,7 +75,6 @@ const TrendingTVShows = ({ tvShows }) => {
                 >
                   <Box
                     justifyContent={"flex-end"}
-                    width={"100%"}
                     display={"flex"}
                     paddingTop={"8px"}
                     paddingRight={"12px"}
