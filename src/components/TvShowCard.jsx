@@ -3,7 +3,8 @@ import Rating from "./Rating";
 import Runtime from "./Runtime";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
-const MovieCard = ({
+
+const TvShowCard = ({
   title,
   genres,
   release_date,
@@ -17,7 +18,7 @@ const MovieCard = ({
       width={{ xs: "100%", md: "15.5rem" }}
       // height={{ xs: "14rem", sm: "25rem" }}
     >
-      <Link to={`/movie-details/${id}`} style={{ textDecoration: "none" }}>
+      <Link to={`/tv-show-details/${id}`} style={{ textDecoration: "none" }}>
         <Box
           width={"100%"}
           height={{ xs: "15rem", sm: "20rem" }}
@@ -30,8 +31,8 @@ const MovieCard = ({
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             overflow: "hidden",
-            transition: "all .3s ease",
             "&:hover": {
+              transition: "all .3s ease",
               "&:before": {
                 content: '""',
                 position: "absolute",
@@ -59,7 +60,7 @@ const MovieCard = ({
         </Box>
       </Link>
       <Link
-        to={`/movie-details/${id}`}
+        to={`/tv-show-details/${id}`}
         style={{ textDecoration: "none", color: "white" }}
       >
         <Typography
@@ -115,4 +116,4 @@ const MovieCard = ({
     </Box>
   );
 };
-export default MovieCard;
+export default TvShowCard;

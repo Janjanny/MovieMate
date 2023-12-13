@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Movies from "./Pages/Movies";
 import TvShows from "./Pages/TvShows";
 import MovieDetails from "./Pages/movieDetails";
+import TvShowDetails from "./Pages/TvShowDetails";
 
 const App = () => {
   const theme = createTheme({
@@ -34,6 +35,10 @@ const App = () => {
             <Route path="/movies" element={<Movies />}></Route>
             <Route path="/tv-shows" element={<TvShows />}></Route>
             <Route path="/movie-details/:id" element={<MovieDetails />}></Route>
+            <Route
+              path="/tv-show-details/:id"
+              element={<TvShowDetails />}
+            ></Route>
           </Routes>
           <Footer />
         </Box>

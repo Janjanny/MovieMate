@@ -26,22 +26,24 @@ const TrendingTVShows = ({ tvShows }) => {
         >
           Trending TV Shows
         </Typography>
-        <Typography
-          sx={{
-            fontSize: { xs: "1rem", md: '"1.2rem"' },
-            color: "gray",
-            backgroundColor: "none",
-            "&:hover": { fontWeight: "bold" },
-            cursor: "pointer",
-            transition: "500ms ease",
-          }}
-          display={"flex"}
-          direction={"row"}
-          alignItems={"center"}
-          gap="8px"
-        >
-          View All <ArrowForwardIcon fontSize="medium" />
-        </Typography>
+        <Link to="/tv-shows" style={{ textDecoration: "none" }}>
+          <Typography
+            sx={{
+              fontSize: { xs: "1rem", md: '"1.2rem"' },
+              color: "gray",
+              backgroundColor: "none",
+              "&:hover": { fontWeight: "bold" },
+              cursor: "pointer",
+              transition: "500ms ease",
+            }}
+            display={"flex"}
+            direction={"row"}
+            alignItems={"center"}
+            gap="8px"
+          >
+            View All <ArrowForwardIcon fontSize="medium" />
+          </Typography>
+        </Link>
       </Stack>
       {/* cards here */}
       <Grid
@@ -59,7 +61,7 @@ const TrendingTVShows = ({ tvShows }) => {
               sx={{ borderRadius: "12px" }}
             >
               <Link
-                to={`/details/${movie.id}`}
+                to={`/tv-show-details/${movie.id}`}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Box
@@ -71,6 +73,21 @@ const TrendingTVShows = ({ tvShows }) => {
                     backgroundSize: "cover",
                     borderRadius: "12px",
                     marginBottom: "12px",
+                    position: " relative",
+                    "&:hover": {
+                      transition: "all .3s ease",
+                      "&:before": {
+                        content: '""',
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.2)", // Set the white color with low opacity
+                        zIndex: 1,
+                      },
+                      opacity: 0.9, // Set the low opacity for the image on hover
+                    },
                   }}
                 >
                   <Box
@@ -91,7 +108,7 @@ const TrendingTVShows = ({ tvShows }) => {
                 key={movie.id}
               >
                 <Link
-                  to={`/details/${movie.id}`}
+                  to={`/tv-show-details/${movie.id}`}
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <Typography

@@ -182,3 +182,18 @@
     transform: scale(0);
   }
 }
+
+form .search-input .submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+form .search-input .submit-btn:hover {
+  color: var(--red);
+}

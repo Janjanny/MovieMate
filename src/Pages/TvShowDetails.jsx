@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Button, Stack, Modal } from "@mui/material";
+import { Box, Typography, Grid, Button, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Background from "../assets/background.jpg";
@@ -12,57 +12,58 @@ import LaunchOutlinedIcon from "@mui/icons-material/LaunchOutlined";
 import { Link } from "react-router-dom";
 import CastCard from "../components/CastCard";
 
-import { movieOptions, fetchMovieDetails } from "../utils/fetchAPI";
+import {
+  movieOptions,
+  fetchMovieDetails,
+  showOptions,
+} from "../utils/fetchAPI";
 import DateFormat from "../components/DateFormat";
 import Runtime from "../components/Runtime";
 import Loader from "../components/Loader";
 
-const MovieDetails = () => {
+const TvShowDetails = () => {
   const { id } = useParams();
   const backdropPath = "https://www.themoviedb.org/t/p/original";
   const [movieDetails, setMovieDetails] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // function for modal
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   // function for finding the director
   const findDirector = (data) => {
-    const directorData = data.find((entry) => entry.job === "Director");
-    return directorData.name;
+    if (data.length != 0) {
+      const directorData = data.find((entry) => entry.job === "Director");
+      if (directorData && directorData.name) {
+        return directorData.name;
+      } else {
+        return "Not Found";
+      }
+    } else {
+      return "Not Found";
+    }
   };
-
   // render the movie using its id
   useEffect(() => {
     try {
       const fetchMovieInfos = async () => {
         const movieDetailsData = await fetchMovieDetails(
-          "https://api.themoviedb.org/3/movie/",
+          "https://api.themoviedb.org/3/tv",
           id,
-          movieOptions
+          showOptions
         );
 
         const movieCreditsData = await fetchMovieDetails(
-          "https://api.themoviedb.org/3/movie/",
-          `${id}/credits`,
-          movieOptions
+          "https://api.themoviedb.org/3/tv/",
+          `${id}/aggregate_credits`,
+          showOptions
         );
 
         const movieVideosData = await fetchMovieDetails(
-          "https://api.themoviedb.org/3/movie/",
+          "https://api.themoviedb.org/3/tv",
           `${id}/videos`,
-          movieOptions
+          showOptions
         );
         const moviesSocialsData = await fetchMovieDetails(
-          "https://api.themoviedb.org/3/movie/",
+          "https://api.themoviedb.org/3/tv/",
           `${id}/external_ids`,
-          movieOptions
+          showOptions
         );
 
         const combineData = {
@@ -89,11 +90,14 @@ const MovieDetails = () => {
 
   // function for trailer
   const trailerVideo = (data) => {
-    const trailer = data.find((entry) => entry.type === "Trailer");
-    return `https://www.youtube.com/embed/${trailer.key}`;
+    if (data.length !== 0) {
+      const trailer = data.find((entry) => entry.type === "Trailer");
+      return `https://www.youtube.com/watch?v=${trailer.key}`;
+    } else {
+      return "No video Found";
+    }
   };
 
-  // console.log(trailerVideo(movieDetails.videos.results));
   console.log(movieDetails);
 
   return (
@@ -164,7 +168,7 @@ const MovieDetails = () => {
                             marginTop: { xs: "1rem", sm: "0" },
                           }}
                         >
-                          {movieDetails.details.title}
+                          {movieDetails.details.name}
                         </Typography>
                         <Stack
                           direction={"row"}
@@ -195,7 +199,7 @@ const MovieDetails = () => {
                           >
                             {" "}
                             <DateFormat
-                              movieDate={movieDetails.details.release_date}
+                              movieDate={movieDetails.details.first_air_date}
                             />
                           </Typography>
 
@@ -205,7 +209,9 @@ const MovieDetails = () => {
                             sx={{ fontSize: { xs: "12px", md: "14.5px" } }}
                           >
                             {" "}
-                            <Runtime runtime={movieDetails.details.runtime} />
+                            <Runtime
+                              runtime={movieDetails.details.number_of_seasons}
+                            />
                           </Typography>
                         </Stack>
                         <Typography
@@ -248,56 +254,6 @@ const MovieDetails = () => {
                             <MovieCreationOutlinedIcon /> Watch trailer
                           </Button>
                         </Link> */}
-
-                        <Button
-                          className="watch-trailer-btn"
-                          onClick={handleOpenModal}
-                          sx={{
-                            alignSelf: "flex-start",
-                            color: "white",
-                            border: "1px solid white",
-                            gap: "10px",
-                            fontWeight: "bold",
-                            ":hover": {
-                              backgroundColor: "rgba(255, 255, 255, 0.1)",
-                              backdropFilter: "blur(5px)",
-                            },
-                          }}
-                        >
-                          <MovieCreationOutlinedIcon /> Watch trailer
-                        </Button>
-                        {isModalOpen && (
-                          <Modal
-                            open={isModalOpen}
-                            onClose={handleCloseModal}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                          >
-                            <Box
-                              sx={{
-                                position: "absolute",
-                                top: "50%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                maxWidth: 720,
-                                width: "100%",
-                                backgroundColor: "transparent",
-                                border: "2px solid #000",
-                                boxShadow: 24,
-                              }}
-                            >
-                              <iframe
-                                width="100%"
-                                height="405"
-                                src={trailerVideo(movieDetails.videos.results)}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                              ></iframe>
-                            </Box>
-                          </Modal>
-                        )}
                       </Box>
                     </Stack>
                   </Box>
@@ -389,20 +345,22 @@ const MovieDetails = () => {
                         textAlign={{ xs: "left", sm: "center", lg: "left" }}
                       >
                         <strong>Budget</strong> <br />{" "}
-                        {movieDetails.details.budget.toLocaleString("en-us", {
+                        {/* {movieDetails.details.budget.toLocaleString("en-us", {
                           style: "currency",
                           currency: "USD",
-                        })}
+                        })} */}{" "}
+                        --
                       </Typography>
                       <Typography
                         fontSize={".9rem"}
                         textAlign={{ xs: "left", sm: "center", lg: "left" }}
                       >
                         <strong>Revenue</strong> <br />{" "}
-                        {movieDetails.details.revenue.toLocaleString("en-us", {
+                        {/* {movieDetails.details.revenue.toLocaleString("en-us", {
                           style: "currency",
                           currency: "USD",
-                        })}
+                        })} */}{" "}
+                        --
                       </Typography>
                     </Stack>
                   </Box>
@@ -519,4 +477,4 @@ const MovieDetails = () => {
     </>
   );
 };
-export default MovieDetails;
+export default TvShowDetails;

@@ -5,6 +5,7 @@ import Rating from "../components/Rating";
 import { useEffect, useState } from "react";
 import { popularCardShadow } from "../utils/customStyles";
 import Loader from "../components/Loader";
+import { Link } from "react-router-dom";
 
 import {
   fetchMovieData,
@@ -225,18 +226,20 @@ const Home = () => {
                 mb={{ xs: "8rem", sm: "0" }}
                 justifyContent={{ xs: "center", md: "flex-start" }}
               >
-                <Button
-                  variant="contained"
-                  sx={{
-                    gap: "8px",
-                    borderRadius: "20px",
-                    position: "relative",
-                    zIndex: 5,
-                  }}
-                >
-                  <PlayArrowIcon /> Watch Trailer
-                </Button>
-                <Button
+                <Link to={`/movie-details/${activeBackDrop.id}`}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      gap: "8px",
+                      borderRadius: "20px",
+                      position: "relative",
+                      zIndex: 5,
+                    }}
+                  >
+                    <PlayArrowIcon /> Movie Details
+                  </Button>
+                </Link>
+                {/* <Button
                   variant="contained"
                   sx={{
                     backgroundColor: "#656565",
@@ -247,7 +250,7 @@ const Home = () => {
                   }}
                 >
                   See Details
-                </Button>
+                </Button> */}
               </Stack>
 
               {/* popular movies */}

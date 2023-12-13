@@ -4,6 +4,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MovieCard from "./MovieCard";
 import { useState } from "react";
 import { Category } from "@mui/icons-material";
+import TvShowCard from "./TvShowCard";
 
 const HomeRecommended = ({ movieList, tvShowList }) => {
   const [currentList, setCurrentList] = useState("Movies");
@@ -107,7 +108,7 @@ const HomeRecommended = ({ movieList, tvShowList }) => {
             ))
           : tvShowList.slice(0, 4).map((show) => (
               <Grid item xs={6} sm={6} md={4} lg={3}>
-                <MovieCard
+                <TvShowCard
                   title={show.name}
                   genres={show.movieDetails.genres}
                   release_date={show.first_air_date}

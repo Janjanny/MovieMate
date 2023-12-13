@@ -12,6 +12,7 @@ import { afterOverlay } from "../utils/customStyles";
 import { fetchMovieData, movieOptions, showOptions } from "../utils/fetchAPI";
 import MovieCard from "../components/MovieCard";
 import Loader from "../components/Loader";
+import TvShowCard from "../components/TvShowCard";
 
 const TvShows = () => {
   const backdropPath = "https://www.themoviedb.org/t/p/original";
@@ -63,6 +64,7 @@ const TvShows = () => {
         );
 
         setTvShowsList(movieCompleteDetails);
+        setFeatured(movieCompleteDetails[0]);
       };
 
       fetchMovies();
@@ -82,7 +84,7 @@ const TvShows = () => {
             overflow={"hidden"}
             position={"relative"}
             sx={{
-              backgroundImage: `url('${Popular}')`,
+              backgroundImage: `url('${backdropPath}${featured.backdrop_path}')`,
               backgroundPosition: "center center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
@@ -105,26 +107,21 @@ const TvShows = () => {
                   textTransform={"uppercase"}
                   fontSize={{ xs: ".7rem", md: ".8rem" }}
                 >
-                  Featured Movie
+                  Featured TV Show
                 </Typography>
                 <Typography
                   fontSize={{ xs: "2.8rem", md: "3.5rem" }}
                   fontWeight={"bold"}
                   textTransform={"uppercase"}
                 >
-                  THE CREATOR
+                  {featured.name}
                 </Typography>
                 <Typography
                   width={"65%"}
                   fontSize={{ xs: ".7rem", md: ".8rem" }}
                   display={{ xs: "none", md: "block" }}
                 >
-                  Amid a future war between the human race and the forces of
-                  artificial intelligence, a hardened ex-special forces agent
-                  grieving the disappearance of his wife, is recruited to hunt
-                  down and kill the Creator, the elusive architect of advanced
-                  AI who has developed a mysterious weapon with the power to end
-                  the war—and mankind itself.
+                  {featured.overview}
                 </Typography>
               </Box>
             </Box>
@@ -163,6 +160,7 @@ const TvShows = () => {
                 <Typography
                   key={index}
                   fontWeight={category == categoryName ? "bold" : "regular"}
+                  color={category == categoryName ? "primary.main" : "white"}
                   onClick={() => {
                     handleClick(categoryName);
                   }}
@@ -170,6 +168,9 @@ const TvShows = () => {
                     cursor: "pointer",
                     fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" },
                     transition: "all 0.3s ease",
+                    "&:hover": {
+                      color: "#bdbdbd",
+                    },
                   }}
                 >
                   {categoryName == "popular"
@@ -197,7 +198,7 @@ const TvShows = () => {
               >
                 {tvShowsList?.map((movie) => (
                   <Grid item xs={6} sm={6} md={4} lg={3}>
-                    <MovieCard
+                    <TvShowCard
                       title={movie.name}
                       genres={movie.movieDetails.genres}
                       release_date={movie.first_air_date}

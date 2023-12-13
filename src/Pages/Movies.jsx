@@ -64,6 +64,7 @@ const Movies = () => {
         );
 
         setMovieList(movieCompleteDetails);
+        setFeatured(movieCompleteDetails[0]);
       };
 
       fetchMovies();
@@ -83,7 +84,7 @@ const Movies = () => {
             overflow={"hidden"}
             position={"relative"}
             sx={{
-              backgroundImage: `url('${Popular}')`,
+              backgroundImage: `url('${backdropPath}${featured.backdrop_path}')`,
               backgroundPosition: "center center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
@@ -113,19 +114,14 @@ const Movies = () => {
                   fontWeight={"bold"}
                   textTransform={"uppercase"}
                 >
-                  THE CREATOR
+                  {featured.title}
                 </Typography>
                 <Typography
                   width={"65%"}
                   fontSize={{ xs: ".7rem", md: ".8rem" }}
                   display={{ xs: "none", md: "block" }}
                 >
-                  Amid a future war between the human race and the forces of
-                  artificial intelligence, a hardened ex-special forces agent
-                  grieving the disappearance of his wife, is recruited to hunt
-                  down and kill the Creator, the elusive architect of advanced
-                  AI who has developed a mysterious weapon with the power to end
-                  the war—and mankind itself.
+                  {featured.overview}
                 </Typography>
               </Box>
             </Box>
@@ -163,6 +159,7 @@ const Movies = () => {
                 <Typography
                   key={index}
                   fontWeight={category == categoryName ? "bold" : "regular"}
+                  color={category == categoryName ? "primary.main" : "white"}
                   onClick={() => {
                     handleClick(categoryName);
                   }}
@@ -170,6 +167,9 @@ const Movies = () => {
                     cursor: "pointer",
                     fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" },
                     transition: "all 0.3s ease",
+                    "&:hover": {
+                      color: "#bdbdbd",
+                    },
                   }}
                 >
                   {categoryName == "popular"

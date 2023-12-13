@@ -120,21 +120,28 @@ const Navbar = () => {
           transform: { xs: "translateX(-50%)", lg: "translateY(0)" },
         }}
       >
-        <OutlinedInput
-          sx={{
-            display: { xs: isShown ? "flex" : "none", lg: "flex" },
-            color: "white",
-            backgroundColor: "rgba(217, 217, 217, 0.25)",
-            borderRadius: "2rem",
-          }}
-          id="input-with-icon-adornment"
-          placeholder="Find Movies, Series..."
-          startAdornment={
-            <InputAdornment position="start" sx={{ color: "white" }}>
-              <SearchIcon />
-            </InputAdornment>
-          }
-        />
+        <form action="">
+          <OutlinedInput
+            autoComplete="off"
+            className="search-input"
+            type="text"
+            sx={{
+              display: { xs: isShown ? "flex" : "none", lg: "flex" },
+              color: "white",
+              backgroundColor: "rgba(217, 217, 217, 0.25)",
+              borderRadius: "2rem",
+            }}
+            id="input-with-icon-adornment"
+            placeholder="Find Movies, Series..."
+            startAdornment={
+              <InputAdornment position="start" sx={{ color: "white" }}>
+                <button className="submit-btn" type="submit">
+                  <SearchIcon />
+                </button>
+              </InputAdornment>
+            }
+          />
+        </form>
       </Box>
       <Box
         sx={{ display: { sm: "block", lg: "none" }, cursor: "pointer" }}

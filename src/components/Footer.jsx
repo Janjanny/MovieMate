@@ -41,18 +41,23 @@ const Footer = () => {
               flexDirection={"column"}
               height={"100%"}
             >
-              <Button
-                variant="outlined"
-                sx={{
-                  alignSelf: { xs: "center", md: "flex-end" },
-                  color: "white",
-                  borderColor: "white",
-                  gap: "15px",
-                  padding: "8px 18px",
-                }}
+              <Link
+                to="https://github.com/Janjanny/MovieMate"
+                style={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <GitHubIcon /> Github Repository
-              </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    alignSelf: { xs: "center", md: "flex-end" },
+                    color: "white",
+                    borderColor: "white",
+                    gap: "15px",
+                    padding: "8px 18px",
+                  }}
+                >
+                  <GitHubIcon /> Github Repository
+                </Button>
+              </Link>
               <Stack
                 className="nav-links"
                 direction={"row"}
