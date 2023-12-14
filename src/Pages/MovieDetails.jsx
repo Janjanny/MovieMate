@@ -16,6 +16,7 @@ import { movieOptions, fetchMovieDetails } from "../utils/fetchAPI";
 import DateFormat from "../components/DateFormat";
 import Runtime from "../components/Runtime";
 import Loader from "../components/Loader";
+import RecommendationMovies from "../components/RecommendationMovies";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -65,11 +66,18 @@ const MovieDetails = () => {
           movieOptions
         );
 
+        const recommendedMovies = await fetchMovieDetails(
+          "https://api.themoviedb.org/3/movie/",
+          `${id}/recommendations`,
+          movieOptions
+        );
+
         const combineData = {
           details: movieDetailsData,
           credits: movieCreditsData,
           videos: movieVideosData,
           socials: moviesSocialsData,
+          recommendations: recommendedMovies.results,
         };
 
         // set the combineData into movieDetails state
@@ -122,6 +130,7 @@ const MovieDetails = () => {
             m={"0 auto"}
             display={"flex"}
             justifyContent={"center"}
+            flexDirection={"column"}
           >
             <Grid
               container
@@ -504,6 +513,20 @@ const MovieDetails = () => {
             </Grid>
 
             {/* recommendations movie */}
+            {movieDetails.recommendations.length > 0 ? (
+              <Box
+                m={"5rem auto 5rem auto"}
+                width={{ xs: "100%", lg: "100%" }}
+                sx={{ backgroundColor: "none" }}
+                overflow={"hidden"}
+              >
+                <RecommendationMovies
+                  movieDetails={movieDetails.recommendations}
+                />
+              </Box>
+            ) : (
+              " "
+            )}
           </Box>
         </Box>
       ) : (

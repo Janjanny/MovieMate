@@ -161,7 +161,7 @@ export default Search;
 
 const MovieResultCard = ({ movie }) => {
   return (
-    <Box width={{ xs: "100%", md: "15.5rem" }}>
+    <Box width={{ xs: "100%", md: "15rem" }}>
       <Link
         to={`/movie-details/${movie.id}`}
         style={{ textDecoration: "none" }}
@@ -232,7 +232,7 @@ const MovieResultCard = ({ movie }) => {
 
 const TvShowResultCard = ({ movie }) => {
   return (
-    <Box width={{ xs: "100%", md: "15.5rem" }}>
+    <Box width={{ xs: "100%", md: "15rem" }}>
       <Link
         to={`/tv-show-details/${movie.id}`}
         style={{ textDecoration: "none" }}

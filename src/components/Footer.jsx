@@ -26,6 +26,7 @@ const Footer = () => {
                 width={"28rem"}
                 alignSelf={{ xs: "center", md: "flex-start" }}
                 textAlign={{ xs: "center", md: "left" }}
+                padding={{ xs: "0 1rem", sm: "0" }}
               >
                 Discover movies and TV shows effortlessly with MovieMate,
                 providing concise and up-to-date information through the TMDB
@@ -41,23 +42,28 @@ const Footer = () => {
               flexDirection={"column"}
               height={"100%"}
             >
-              <Link
-                to="https://github.com/Janjanny/MovieMate"
-                style={{ display: "flex", justifyContent: "flex-end" }}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: { xs: "center", md: "flex-end" },
+                  textDecoration: "none",
+                }}
               >
-                <Button
-                  variant="outlined"
-                  sx={{
-                    alignSelf: { xs: "center", md: "flex-end" },
-                    color: "white",
-                    borderColor: "white",
-                    gap: "15px",
-                    padding: "8px 18px",
-                  }}
-                >
-                  <GitHubIcon /> Github Repository
-                </Button>
-              </Link>
+                <Link to="https://github.com/Janjanny/MovieMate" target="blank">
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      alignSelf: { xs: "center", md: "flex-end" },
+                      color: "white",
+                      borderColor: "white",
+                      gap: "15px",
+                      padding: "8px 18px",
+                    }}
+                  >
+                    <GitHubIcon /> Github Repository
+                  </Button>
+                </Link>
+              </Box>
               <Stack
                 className="nav-links"
                 direction={"row"}

@@ -15,7 +15,7 @@ const TvShowCard = ({
 }) => {
   return (
     <Box
-      width={{ xs: "100%", md: "15.5rem" }}
+      width={{ xs: "100%", md: "15rem" }}
       // height={{ xs: "14rem", sm: "25rem" }}
     >
       <Link to={`/tv-show-details/${id}`} style={{ textDecoration: "none" }}>

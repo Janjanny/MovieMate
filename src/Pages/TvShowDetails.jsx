@@ -20,6 +20,7 @@ import {
 import DateFormat from "../components/DateFormat";
 import Runtime from "../components/Runtime";
 import Loader from "../components/Loader";
+import RecommendationTvShows from "../components/RecommendationTvShows";
 
 const TvShowDetails = () => {
   const { id } = useParams();
@@ -66,11 +67,18 @@ const TvShowDetails = () => {
           showOptions
         );
 
+        const recommendedTvShows = await fetchMovieDetails(
+          "https://api.themoviedb.org/3/tv/",
+          `${id}/recommendations`,
+          showOptions
+        );
+
         const combineData = {
           details: movieDetailsData,
           credits: movieCreditsData,
           videos: movieVideosData,
           socials: moviesSocialsData,
+          recommendations: recommendedTvShows.results,
         };
 
         // set the combineData into movieDetails state
@@ -126,6 +134,7 @@ const TvShowDetails = () => {
             m={"0 auto"}
             display={"flex"}
             justifyContent={"center"}
+            flexDirection={"column"}
           >
             <Grid
               container
@@ -462,6 +471,21 @@ const TvShowDetails = () => {
             </Grid>
 
             {/* recommendations movie */}
+            {/* recommendations movie */}
+            {movieDetails.recommendations.length > 0 ? (
+              <Box
+                m={"5rem auto 5rem auto"}
+                width={{ xs: "100%", lg: "100%" }}
+                sx={{ backgroundColor: "none" }}
+                overflow={"hidden"}
+              >
+                <RecommendationTvShows
+                  movieDetails={movieDetails.recommendations}
+                />
+              </Box>
+            ) : (
+              " "
+            )}
           </Box>
         </Box>
       ) : (
