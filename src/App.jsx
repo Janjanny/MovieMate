@@ -8,6 +8,7 @@ import Movies from "./Pages/Movies";
 import TvShows from "./Pages/TvShows";
 import MovieDetails from "./Pages/movieDetails";
 import TvShowDetails from "./Pages/TvShowDetails";
+import Search from "./Pages/Search";
 
 const App = () => {
   const theme = createTheme({
@@ -39,6 +40,7 @@ const App = () => {
               path="/tv-show-details/:id"
               element={<TvShowDetails />}
             ></Route>
+            <Route path="/search/:query" element={<Search />}></Route>
           </Routes>
           <Footer />
         </Box>

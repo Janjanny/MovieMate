@@ -6,14 +6,29 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+
 import SearchIcon from "@mui/icons-material/Search";
 import { useState, useEffect } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate, useLocation } from "react-router-dom";
+import "../App.css";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isShown, setIsShown] = useState(false);
-  console.log(isShown);
+  const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    // navigate to the search results page
+    navigate(`/search/${searchValue}`);
+  };
+
+  // console.log(isShown);
 
   const handleClick = () => {
     setIsShown(!isShown);
@@ -79,11 +94,10 @@ const Navbar = () => {
         }}
       >
         <Link
+          className={`nav-items ${
+            location.pathname === "/" ? "bold-link" : " "
+          }`}
           to="/"
-          style={{
-            color: "white",
-            textDecoration: "none",
-          }}
           onClick={() => {
             setIsShown(false);
           }}
@@ -91,8 +105,10 @@ const Navbar = () => {
           Home
         </Link>
         <Link
+          className={`nav-items ${
+            location.pathname === "/movies" ? "bold-link" : " "
+          }`}
           to="/movies"
-          style={{ color: "white", textDecoration: "none" }}
           onClick={() => {
             setIsShown(false);
           }}
@@ -100,8 +116,10 @@ const Navbar = () => {
           Movies
         </Link>
         <Link
+          className={`nav-items ${
+            location.pathname === "/tv-shows" ? "bold-link" : " "
+          }`}
           to="/tv-shows"
-          style={{ color: "white", textDecoration: "none" }}
           onClick={() => {
             setIsShown(false);
           }}
@@ -120,8 +138,10 @@ const Navbar = () => {
           transform: { xs: "translateX(-50%)", lg: "translateY(0)" },
         }}
       >
-        <form action="">
+        <form onSubmit={handleSearch}>
           <OutlinedInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
             autoComplete="off"
             className="search-input"
             type="text"

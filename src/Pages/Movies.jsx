@@ -189,7 +189,6 @@ const Movies = () => {
             <Box mt={{ xs: "3rem", md: "5rem" }}>
               <Grid
                 container
-                direction={"row"}
                 columnSpacing={1}
                 rowSpacing={{ xs: 4, sm: 5 }}
                 justifyContent={"center"}

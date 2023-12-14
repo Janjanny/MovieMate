@@ -197,3 +197,20 @@ form .search-input .submit-btn {
 form .search-input .submit-btn:hover {
   color: var(--red);
 }
+
+.nav-links .nav-items {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.nav-links .nav-items:hover {
+  color: var(--red);
+}
+
+.nav-links .bold-link {
+  transition: all 0.3s ease;
+  font-weight: 800;
+
+  color: var(--red);
+}
