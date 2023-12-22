@@ -41,6 +41,8 @@ const MovieDetails = () => {
 
   // render the movie using its id
   useEffect(() => {
+    // add event for scroll to top
+    window.scrollTo(0, 0);
     try {
       const fetchMovieInfos = async () => {
         const movieDetailsData = await fetchMovieDetails(

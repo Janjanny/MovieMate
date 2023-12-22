@@ -31,6 +31,8 @@ const TvShows = () => {
 
   // fetch fetch tv shows
   useEffect(() => {
+    // add event for scroll to top
+    window.scrollTo(0, 0);
     //
     try {
       const fetchMovies = async () => {

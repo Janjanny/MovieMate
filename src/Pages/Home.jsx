@@ -72,6 +72,8 @@ const Home = () => {
   // console.log("tvshows: ", tvShowList);
   // useEffect for fetching the movie data
   useEffect(() => {
+    // add event for scroll to top
+    window.scrollTo(0, 0);
     try {
       // fetch movie and details
       const fetchMovieAndDetails = async () => {
