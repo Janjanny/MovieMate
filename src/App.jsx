@@ -6,7 +6,7 @@ import Home from "./Pages/Home";
 import Footer from "./components/Footer";
 import Movies from "./Pages/Movies";
 import TvShows from "./Pages/TvShows";
-import MovieDetails from "./Pages/movieDetails";
+import MovieDetails from "./Pages/MovieDetails";
 import TvShowDetails from "./Pages/TvShowDetails";
 import Search from "./Pages/Search";
 
